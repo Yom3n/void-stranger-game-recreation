@@ -15,4 +15,5 @@ Class = require 'lib/class'
 
 -- Contains all constants
 require 'src/constants'
+require 'src/Tile'
 

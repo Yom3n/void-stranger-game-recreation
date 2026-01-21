@@ -12,6 +12,10 @@ function love.load()
 
     -- Way to globally access pressed key
     love.keyboard.keypressed = {}
+
+
+    tile = Tile(0, 0)
+    tile2 = Tile(TILE_SIZE, 0)
 end
 
 function love.update(dt)
@@ -21,7 +25,10 @@ end
 function love.draw()
     push:start()
 
+
     displayFPS()
+    tile:render()
+    tile2:render()
 
     push:finish()
 end
