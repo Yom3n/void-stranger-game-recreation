@@ -14,8 +14,8 @@ end
 
 --- Renders the tile.
 function Tile:render()
-    love.graphics.setColor(0, 0, 0, 255)
+    love.graphics.setColor(0, 0, 0, 1)
     love.graphics.rectangle("line", self.x, self.y, TILE_SIZE, TILE_SIZE)
-    love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.rectangle("fill", self.x + 2, self.y + 2, TILE_SIZE - 2, TILE_SIZE - 2)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.rectangle("fill", self.x + 2, self.y + 2, TILE_SIZE - 4, TILE_SIZE - 4)
 end

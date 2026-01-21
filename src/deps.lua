@@ -15,5 +15,10 @@ Class = require 'lib/class'
 
 -- Contains all constants
 require 'src/constants'
+
+-- Represents single tile on the level
 require 'src/Tile'
+
+-- Groups tiles into a level
+require 'src/Level'
 

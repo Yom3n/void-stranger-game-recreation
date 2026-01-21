@@ -1,4 +1,6 @@
 require 'src/deps'
+
+
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     math.randomseed(os.time())
@@ -13,9 +15,7 @@ function love.load()
     -- Way to globally access pressed key
     love.keyboard.keypressed = {}
 
-
-    tile = Tile(0, 0)
-    tile2 = Tile(TILE_SIZE, 0)
+    level = Level()
 end
 
 function love.update(dt)
@@ -27,8 +27,7 @@ function love.draw()
 
 
     displayFPS()
-    tile:render()
-    tile2:render()
+    level:render()
 
     push:finish()
 end
