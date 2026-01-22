@@ -19,6 +19,7 @@ require 'src/constants'
 -- Represents single tile on the level
 require 'src/tiles/BaseTile'
 require 'src/tiles/FloorTile'
+require 'src/tiles/WallTile'
 
 -- Groups tiles into a level
 require 'src/Level'
