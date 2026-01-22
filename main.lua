@@ -25,9 +25,8 @@ end
 function love.draw()
     push:start()
 
-
-    displayFPS()
     level:render()
+    displayFPS()
 
     push:finish()
 end

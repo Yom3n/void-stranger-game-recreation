@@ -20,6 +20,7 @@ require 'src/constants'
 require 'src/tiles/BaseTile'
 require 'src/tiles/FloorTile'
 require 'src/tiles/WallTile'
+require 'src/tiles/VoidTile'
 
 -- Groups tiles into a level
 require 'src/Level'

@@ -5,7 +5,7 @@ function Level:init()
     for i = 1, LEVEL_WIDTH, 1 do
         self.tiles[i] = {}
         for j = 1, LEVEL_HEIGHT, 1 do
-            self.tiles[i][j] = WallTile((i - 1) * TILE_SIZE, (j - 1) * TILE_SIZE)
+            self.tiles[i][j] = FloorTile((i - 1) * TILE_SIZE, (j - 1) * TILE_SIZE)
         end
     end
 end
