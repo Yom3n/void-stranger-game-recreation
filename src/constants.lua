@@ -5,9 +5,9 @@ WINDOW_HEIGHT = 720
 -- Size of the single tile in the game
 TILE_SIZE = 32
 
--- Max num of tiles horizontally
+-- Max num of tiles horizontally (level width in tiles)
 LEVEL_WIDTH = 14
--- Max num of tiles vertically
+-- Max num of tiles vertically (level height in tiles)
 LEVEL_HEIGHT = 8
 
 -- size we're trying to emulate with push

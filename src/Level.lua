@@ -7,7 +7,7 @@ local levelBlueprintMapping = {
 }
 
 function Level:init()
-    -- Human readable map that let us simply draw levels. Symbols based on levelBlueprintMapping
+    -- Human readable map that lets us simply draw levels. Symbols based on levelBlueprintMapping
     local levelBlueprint = {
         { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', },
         { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'v', 'w', },
@@ -21,9 +21,9 @@ function Level:init()
     assert(#levelBlueprint == LEVEL_HEIGHT, "Invalid blueprint")
     assert(#levelBlueprint[1] == LEVEL_WIDTH, "Invalid blueprint")
     self.tiles = {}
-    for i = 1, LEVEL_WIDTH, 1 do
+    for i = 1, LEVEL_WIDTH do
         self.tiles[i] = {}
-        for j = 1, LEVEL_HEIGHT, 1 do
+        for j = 1, LEVEL_HEIGHT do
             -- In lua tables use [row][column] annotation,
             -- but I'm flipping it to make it blueprint more human readable
             local bpValue = levelBlueprint[j][i]
@@ -42,8 +42,8 @@ function Level:init()
 end
 
 function Level:render()
-    for i = 1, LEVEL_WIDTH, 1 do
-        for j = 1, LEVEL_HEIGHT, 1 do
+    for i = 1, LEVEL_WIDTH do
+        for j = 1, LEVEL_HEIGHT do
             self.tiles[i][j]:render()
         end
     end
