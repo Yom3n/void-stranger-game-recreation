@@ -48,7 +48,7 @@ function Level:init()
                     Check tilesBlueprintMapping for correct values]]
                 )
             end
-            self.tiles[i][j] = Tile((i - 1) * TILE_SIZE, (j - 1) * TILE_SIZE)
+            self.tiles[i][j] = Tile(Coordinates(i, j))
 
             if string.len(bpValue) == 2 then
                 local objVal = string.sub(bpValue, 2, 2)
@@ -60,7 +60,7 @@ function Level:init()
                     Check objectsBlueprintMapping for correct values]]
                     )
                 end
-                self.objects[i][j] = Object((i - 1) * TILE_SIZE, (j - 1) * TILE_SIZE)
+                self.objects[i][j] = Object(Coordinates(i, j))
             end
         end
     end

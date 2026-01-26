@@ -16,6 +16,10 @@ Class = require 'lib/class'
 -- Contains all constants
 require 'src/constants'
 
+-- Encapsulates in game x and y to be able to do calculations
+-- based on Tiles, rather than VIRTUAL_WIDTH and VIRTUAL_HEIGHT
+require 'src.Coordinates'
+
 -- Represents single tile on the level
 require 'src/tiles/BaseTile'
 require 'src/tiles/FloorTile'
@@ -27,4 +31,3 @@ require 'src/Player'
 
 -- Groups tiles into a level
 require 'src/Level'
-

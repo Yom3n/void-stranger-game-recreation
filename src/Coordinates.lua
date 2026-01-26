@@ -1,0 +1,22 @@
+-- Instead of using width and height of the screen
+-- coordinates encapsulates all this, and use tiles coordinates.
+-- x coordinate is a horizontal tile from 1 to LEVEL_WIDTH
+-- y coordinate is a vertical tile from 1 to LEVEL_HEIGHT
+Coordinates = Class {}
+
+function Coordinates:init(x, y)
+    assert(x >= 1 and x <= LEVEL_WIDTH, "x coordinate must be between 1 and LEVEL_WIDTH")
+    assert(y >= 1 and y <= LEVEL_HEIGHT, "y coordinate must be between 1 and LEVEL_HEIGHT")
+    self.x = x
+    self.y = y
+end
+
+-- Returns X of top left corner of a tile
+function Coordinates:inGameX()
+    return (self.x - 1) * TILE_SIZE
+end
+
+-- Returns Y of top left corner of a tile
+function Coordinates:inGameY()
+    return (self.y - 1) * TILE_SIZE
+end
