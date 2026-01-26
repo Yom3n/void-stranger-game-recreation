@@ -22,6 +22,9 @@ require 'src/tiles/FloorTile'
 require 'src/tiles/WallTile'
 require 'src/tiles/VoidTile'
 
+-- Playable character
+require 'src/Player'
+
 -- Groups tiles into a level
 require 'src/Level'
 
