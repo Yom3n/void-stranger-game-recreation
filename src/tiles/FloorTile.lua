@@ -1,5 +1,10 @@
 FloorTile = Class { __includes = BaseTile }
 
+function FloorTile:init(coordinates)
+    self.coordinates = coordinates
+    self.type = 'FloorTile'
+end
+
 function FloorTile:render()
     local x = self.coordinates:inGameX()
     local y = self.coordinates:inGameY()

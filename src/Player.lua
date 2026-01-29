@@ -10,3 +10,10 @@ function Player:render()
     love.graphics.setColor(1, 0, 0, 1)
     love.graphics.circle("fill", x + TILE_SIZE / 2, y + TILE_SIZE / 2, TILE_SIZE / 2)
 end
+
+function Player:move(dir, level)
+    if dir == 'up' then
+        
+    end
+
+end

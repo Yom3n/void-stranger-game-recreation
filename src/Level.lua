@@ -82,3 +82,8 @@ function Level:render()
         end
     end
 end
+
+-- Provide coordinates to get the tile of the level
+function Level:peek(coordinates)
+    return self.tiles[coordinates.x][coordinates.y]
+end

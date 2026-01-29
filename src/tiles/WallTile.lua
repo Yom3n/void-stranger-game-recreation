@@ -1,6 +1,12 @@
 --- @class Tile representing unreachable wall
 WallTile = Class { __includes = BaseTile }
 
+
+function WallTile:init(coordinates)
+    self.coordinates = coordinates
+    self.type = 'WallTile'
+end
+
 function WallTile:render()
     local x = self.coordinates:inGameX()
     local y = self.coordinates:inGameY()
