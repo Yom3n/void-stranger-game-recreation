@@ -1,11 +1,12 @@
 --- @class BaseTile
 --- Represents a single tile in the game.
---- @param coordinates Coordinates The position of the tile
+--- @pfiels coordinates Coordinates The position of the tile
 BaseTile = Class {}
 
 --- Creates a new Tile.
 --- @param coordinates Coordinates The position of the tile
 function BaseTile:init(coordinates)
+    -- @type Coordinates
     self.coordinates = coordinates
 end
 

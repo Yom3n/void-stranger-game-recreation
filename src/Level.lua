@@ -14,7 +14,7 @@ local objectsBlueprintMapping = {
 
 function Level:init()
     -- Human readable map that lets us simply draw levels.
-    -- First symbol is always a Floor type based on levelBlueprintMapping
+    -- First symbol is always a Floor type based on tilesBlueprintMapping
     -- Second symbol is optional and represents character or object on the tile (usually on Floor tiles).
     -- Mapping of second symbol is based on objectsBlueprintMapping
     local levelBlueprint = {
@@ -38,6 +38,12 @@ function Level:init()
             -- In lua tables use [row][column] annotation,
             -- but I'm flipping it to make it blueprint more human readable
             local bpValue = levelBlueprint[j][i]
+            local valueLength = string.len(bpValue)
+
+            if valueLength > 2 then
+                error(bpValue .. "is invalid blueprint value")
+            end
+
             local bpTileValue = string.sub(bpValue, 1, 1)
             -- print(i .. " " .. j, " " .. " " .. bpValue)
             local Tile = tilesBlueprintMapping[bpTileValue]
@@ -50,7 +56,7 @@ function Level:init()
             end
             self.tiles[i][j] = Tile(Coordinates(i, j))
 
-            if string.len(bpValue) == 2 then
+            if valueLength == 2 then
                 local objVal = string.sub(bpValue, 2, 2)
                 local Object = objectsBlueprintMapping[objVal]
                 if Object == nil then
