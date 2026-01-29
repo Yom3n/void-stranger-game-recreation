@@ -31,3 +31,5 @@ require 'src.Player'
 
 -- Groups tiles into a level
 require 'src.Level'
+
+require 'src.states.GameState'

@@ -1,0 +1,15 @@
+GameState = Class {}
+
+function GameState:init()
+    self.level = Level()
+    self.player = self.level:getPlayer()
+    assert(self.player ~= nil, 'Player must exist on the level')
+end
+
+function GameState:render()
+    self.level:render()
+end
+
+function GameState:update(dt)
+
+end

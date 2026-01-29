@@ -2,6 +2,7 @@ Player = Class {}
 
 function Player:init(coordinates)
     self.coordinates = coordinates
+    self.type = 'Player'
 end
 
 function Player:render()
@@ -12,6 +13,8 @@ function Player:render()
 end
 
 function Player:move(dir, level)
+    -- TODO
+    error("Not implemented")
     if dir == 'up' then
         
     end
