@@ -11,5 +11,7 @@ function GameState:render()
 end
 
 function GameState:update(dt)
-
+    if love.keyboard.keypressed['w'] then
+        self.player:move('u', self.level)
+    end
 end

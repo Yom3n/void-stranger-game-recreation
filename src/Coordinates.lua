@@ -20,3 +20,8 @@ end
 function Coordinates:inGameY()
     return (self.y - 1) * TILE_SIZE
 end
+
+-- Creates and returns a new Coordinates object with the same x and y values
+function Coordinates:copy()
+    return Coordinates(self.x, self.y)
+end

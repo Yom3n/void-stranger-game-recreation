@@ -19,6 +19,8 @@ function love.load()
 end
 
 function love.update(dt)
+    gameState:update(dt)
+    
     love.keyboard.keypressed = {}
 end
 
