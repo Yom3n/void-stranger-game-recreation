@@ -3,6 +3,8 @@ Player = Class {}
 function Player:init(coordinates)
     self.coordinates = coordinates
     self.type = 'Player'
+    --- number of tries uesr can fail without ending a game
+    self.lives = 1
 end
 
 function Player:render()
@@ -53,4 +55,16 @@ function Player:move(dir, level)
         return
     end
     self.coordinates = newPosition
+    self:onMoved(targetTile)
+end
+
+--- Called after player moved to new position
+function Player:onMoved(newTile)
+    if newTile.type == 'VoidTile' then
+        self:die()
+    end
+end
+
+function Player:die()
+    self.lives = self.lives - 1
 end

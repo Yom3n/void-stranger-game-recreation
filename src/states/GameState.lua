@@ -23,4 +23,10 @@ function GameState:update(dt)
     if love.keyboard.keypressed['a'] then
         self.player:move('l', self.level)
     end
+
+
+    if self.player.lives <= 0 then
+        -- TODO Change state to Game Over state
+        print("GAME OVER")
+    end
 end
