@@ -91,6 +91,7 @@ end
 
 -- Provide coordinates to get the tile of the level
 function Level:peekTile(coordinates)
+    assert(coordinates ~= nil, 'Coordinates can\'t be nil')
     return self.tiles[coordinates.x][coordinates.y]
 end
 

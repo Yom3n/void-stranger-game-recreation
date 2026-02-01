@@ -26,22 +26,19 @@ function Player:move(dir, level)
             return
         end
         newPosition.y = newPosition.y - 1
-    end
-    if dir == 'd' then
+    elseif dir == 'd' then
         if self.coordinates.y == LEVEL_HEIGHT then
             -- can't move outside of the screen
             return
         end
         newPosition.y = newPosition.y + 1
-    end
-    if dir == 'l' then
+    elseif dir == 'l' then
         if self.coordinates.x == 1 then
             -- can't move outside of the screen
             return
         end
         newPosition.x = newPosition.x - 1
-    end
-    if dir == 'r' then
+    elseif dir == 'r' then
         if self.coordinates.x == LEVEL_WIDTH then
             -- can't move outside of the screen
             return
