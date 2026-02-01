@@ -14,4 +14,7 @@ function GameState:update(dt)
     if love.keyboard.keypressed['w'] then
         self.player:move('u', self.level)
     end
+    if love.keyboard.keypressed['s'] then
+        self.player:move('d', self.level)
+    end
 end
