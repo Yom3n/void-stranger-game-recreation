@@ -16,7 +16,7 @@ end
 --- @param dir string # The direction to move the player ('u', 'd', 'l', 'r').
 --- @param level table # The level object containing the map and tiles.
 function Player:move(dir, level)
-    assert(dir ~= nil, 'dir is requered')
+    assert(dir ~= nil, 'dir is required')
     assert(level ~= nil, 'Level is required')
 
     local newPosition = self.coordinates:copy()
