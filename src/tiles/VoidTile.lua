@@ -2,6 +2,11 @@
 --- and lethal to Player
 VoidTile = Class { __includes = BaseTile }
 
+function VoidTile:init(coordinates)
+    self.coordinates = coordinates
+    self.type = 'VoidTile'
+end
+
 function VoidTile:render()
     local x = self.coordinates:inGameX()
     local y = self.coordinates:inGameY()

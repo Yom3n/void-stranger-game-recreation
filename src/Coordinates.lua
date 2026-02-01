@@ -1,5 +1,5 @@
 -- Instead of using width and height of the screen
--- coordinates encapsulates all this, and use tiles coordinates.
+-- this Coordinates let you operate on tiles cordinates.
 -- x coordinate is a horizontal tile from 1 to LEVEL_WIDTH
 -- y coordinate is a vertical tile from 1 to LEVEL_HEIGHT
 Coordinates = Class {}
@@ -19,4 +19,9 @@ end
 -- Returns Y of top left corner of a tile
 function Coordinates:inGameY()
     return (self.y - 1) * TILE_SIZE
+end
+
+-- Creates and returns a new Coordinates object with the same x and y values
+function Coordinates:copy()
+    return Coordinates(self.x, self.y)
 end

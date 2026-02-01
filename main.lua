@@ -15,17 +15,19 @@ function love.load()
     -- Way to globally access pressed key
     love.keyboard.keypressed = {}
 
-    level = Level()
+    gameState = GameState()
 end
 
 function love.update(dt)
+    gameState:update(dt)
+    
     love.keyboard.keypressed = {}
 end
 
 function love.draw()
     push:start()
 
-    level:render()
+    gameState:render()
     displayFPS()
 
     push:finish()

@@ -8,6 +8,7 @@ BaseTile = Class {}
 function BaseTile:init(coordinates)
     -- @type Coordinates
     self.coordinates = coordinates
+    self.type = 'BaseTile'
 end
 
 --- Renders the tile onto the screen

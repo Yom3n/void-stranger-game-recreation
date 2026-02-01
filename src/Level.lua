@@ -73,12 +73,36 @@ function Level:init()
 end
 
 function Level:render()
+    -- Don't merge these two loops.
+    -- Causes issues with order of rendering when objects start moving on the map
     for i = 1, LEVEL_WIDTH do
         for j = 1, LEVEL_HEIGHT do
             self.tiles[i][j]:render()
+        end
+    end
+    for i = 1, LEVEL_WIDTH do
+        for j = 1, LEVEL_HEIGHT do
             if self.objects[i][j] ~= nil then
                 self.objects[i][j]:render()
             end
         end
     end
+end
+
+-- Provide coordinates to get the tile of the level
+function Level:peekTile(coordinates)
+    assert(coordinates ~= nil, 'Coordinates can\'t be nil')
+    return self.tiles[coordinates.x][coordinates.y]
+end
+
+function Level:getPlayer()
+    for i = 1, LEVEL_WIDTH do
+        for j = 1, LEVEL_HEIGHT do
+            local obj = self.objects[i][j]
+            if obj ~= nil and obj.type == 'Player' then
+                return obj
+            end
+        end
+    end
+    error('Player not spawned on the level')
 end
