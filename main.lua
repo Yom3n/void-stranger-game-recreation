@@ -15,19 +15,23 @@ function love.load()
     -- Way to globally access pressed key
     love.keyboard.keypressed = {}
 
-    gameState = GameState()
+    StateMachine = StateMachine {
+        ["game"] = function() return GameState() end,
+        ["gameOver"] = function() return GameOverState() end
+    }
+    StateMachine:change("game")
 end
 
 function love.update(dt)
-    gameState:update(dt)
-    
+    StateMachine.current:update(dt)
+
     love.keyboard.keypressed = {}
 end
 
 function love.draw()
     push:start()
 
-    gameState:render()
+    StateMachine.current:render()
     displayFPS()
 
     push:finish()

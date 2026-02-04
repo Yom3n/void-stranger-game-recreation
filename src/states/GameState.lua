@@ -1,4 +1,4 @@
-GameState = Class {}
+GameState = Class { __includes = BaseState }
 
 function GameState:init()
     self.level = Level()
@@ -13,14 +13,18 @@ end
 function GameState:update(dt)
     if love.keyboard.keypressed['w'] then
         self.player:move('u', self.level)
-    end
-    if love.keyboard.keypressed['s'] then
+    elseif love.keyboard.keypressed['s'] then
         self.player:move('d', self.level)
-    end
-    if love.keyboard.keypressed['d'] then
+    
+    elseif love.keyboard.keypressed['d'] then
         self.player:move('r', self.level)
-    end
-    if love.keyboard.keypressed['a'] then
+    
+    elseif love.keyboard.keypressed['a'] then
         self.player:move('l', self.level)
+    end
+
+
+    if self.player.lives <= 0 then
+        StateMachine:change("gameOver")
     end
 end
