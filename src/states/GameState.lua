@@ -1,4 +1,4 @@
-GameState = Class {}
+GameState = Class { __includes = BaseState }
 
 function GameState:init()
     self.level = Level()
@@ -26,7 +26,6 @@ function GameState:update(dt)
 
 
     if self.player.lives <= 0 then
-        -- TODO Change state to Game Over state
-        print("GAME OVER")
+        StateMachine:change("gameOver")
     end
 end

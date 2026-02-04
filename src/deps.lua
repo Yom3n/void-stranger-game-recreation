@@ -12,6 +12,8 @@ push = require 'lib.push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'lib.class'
 
+require 'lib.StateMachine'
+
 
 -- Contains all constants
 require 'src.constants'
@@ -32,4 +34,8 @@ require 'src.Player'
 -- Groups tiles into a level
 require 'src.Level'
 
+
+-- States
+require 'src.states.BaseState'
 require 'src.states.GameState'
+require 'src.states.GameOverState'

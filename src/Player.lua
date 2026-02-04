@@ -66,5 +66,6 @@ function Player:onMoved(newTile)
 end
 
 function Player:die()
+    -- TODO We can can play some sound and animation
     self.lives = self.lives - 1
 end
