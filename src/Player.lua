@@ -55,13 +55,15 @@ function Player:move(dir, level)
         return
     end
     self.coordinates = newPosition
-    self:onMoved(targetTile)
+    self:handleTileInteraction(targetTile, level)
 end
 
 --- Called after player moved to new position
-function Player:onMoved(newTile)
+function Player:handleTileInteraction(newTile, level)
     if newTile.type == 'VoidTile' then
         self:die()
+    elseif newTile.type == 'GoalTile' then
+        level:onReachedGoal()
     end
 end
 

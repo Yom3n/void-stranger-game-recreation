@@ -17,7 +17,8 @@ function love.load()
 
     StateMachine = StateMachine {
         ["game"] = function() return GameState() end,
-        ["gameOver"] = function() return GameOverState() end
+        ["gameOver"] = function() return GameOverState() end,
+        ["win"] = function() return WinState() end
     }
     StateMachine:change("game")
 end

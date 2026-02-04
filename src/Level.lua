@@ -5,6 +5,7 @@ local tilesBlueprintMapping = {
     w = WallTile,
     f = FloorTile,
     v = VoidTile,
+    G = GoalTile
 }
 
 -- Maps all characters/enemies or objects that are on the map
@@ -22,8 +23,8 @@ function Level:init()
         { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
         { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
         { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'fP', 'f', 'f', 'f', 'f', 'f', 'w', },
-        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
+        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'fP', 'f', 'G', 'f', 'f', 'f', 'w', },
+        { 'w', 'f', 'G', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
         { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
         { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',  'w', 'w', 'w', 'w', 'w', 'w', },
     }
@@ -70,6 +71,11 @@ function Level:init()
             end
         end
     end
+end
+
+-- Called when player reaches the GoalTile
+function Level:onReachedGoal()
+    StateMachine:change("win")
 end
 
 function Level:render()

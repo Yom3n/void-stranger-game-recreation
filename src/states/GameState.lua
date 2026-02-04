@@ -15,10 +15,8 @@ function GameState:update(dt)
         self.player:move('u', self.level)
     elseif love.keyboard.keypressed['s'] then
         self.player:move('d', self.level)
-    
     elseif love.keyboard.keypressed['d'] then
         self.player:move('r', self.level)
-    
     elseif love.keyboard.keypressed['a'] then
         self.player:move('l', self.level)
     end

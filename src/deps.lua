@@ -27,6 +27,7 @@ require 'src.tiles.BaseTile'
 require 'src.tiles.FloorTile'
 require 'src.tiles.WallTile'
 require 'src.tiles.VoidTile'
+require 'src.tiles.GoalTile'
 
 -- Playable character
 require 'src.Player'
@@ -39,3 +40,4 @@ require 'src.Level'
 require 'src.states.BaseState'
 require 'src.states.GameState'
 require 'src.states.GameOverState'
+require 'src.states.WinState'
