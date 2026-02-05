@@ -15,3 +15,11 @@ function WallTile:render()
     love.graphics.setColor(.6, .3, .1, 1)
     love.graphics.rectangle("fill", x + 1, y + 1, TILE_SIZE - 2, TILE_SIZE - 2)
 end
+
+--- Called whenever any entity enter the tile
+function WallTile:onEnter(entity, level)
+end
+
+function WallTile:canEnter(entity)
+    return false
+end

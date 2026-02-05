@@ -13,3 +13,11 @@ function FloorTile:render()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.rectangle("fill", x + 1, y + 1, TILE_SIZE - 2, TILE_SIZE - 2)
 end
+
+--- Called whenever any entity enter the tile
+function FloorTile:onEnter(entity, level)
+end
+
+function FloorTile:canEnter(entity)
+    return true
+end

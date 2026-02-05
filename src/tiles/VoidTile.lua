@@ -14,3 +14,12 @@ function VoidTile:render()
     love.graphics.rectangle("line", x, y, TILE_SIZE, TILE_SIZE)
     -- Void tile is transparent, so no sprite/rectangle is needed 
 end
+
+--- Called whenever any entity enter the tile
+function VoidTile:onEnter(entity, level)
+    entity:die()
+end
+
+function VoidTile:canEnter(entity)
+    return true
+end

@@ -15,3 +15,14 @@ function GoalTile:render()
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.rectangle("fill", x + 1, y + 1, TILE_SIZE - 2, TILE_SIZE - 2)
 end
+
+--- Called whenever any entity enter the tile
+function GoalTile:onEnter(entity, level)
+    if entity.type == 'Player' then
+        level:triggerWin()
+    end
+end
+
+function GoalTile:canEnter(entity)
+    return true
+end
