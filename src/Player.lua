@@ -80,6 +80,10 @@ end
 --- When player inventory is empty and player is facing pickable tile, then pick it up
 function Player:onInteractionKeyPressed()
     local targetCords = self:getFacingTileCoordinates()
+    if not targetCords:validate() then
+        print("Invalid target coordinates in onInteractionKeyPressed")
+        return
+    end
     local target = self.level:peekTile(targetCords)
     local success = self.level:replaceWithVoid(targetCords)
     if success then
