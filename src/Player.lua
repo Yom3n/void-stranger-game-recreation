@@ -9,6 +9,8 @@ function Player:init(coordinates, level)
     --- number of tries uesr can fail without ending a game
     self.lives = 1
     self.level = level
+    -- direction that player is facing. Valid inputs: u d l r (similar like move(dir) input)
+    self.direction = 'l'
 end
 
 function Player:render()
@@ -16,13 +18,29 @@ function Player:render()
     local y = self.coordinates:inGameY()
     love.graphics.setColor(1, 0, 0, 1)
     love.graphics.circle("fill", x + TILE_SIZE / 2, y + TILE_SIZE / 2, TILE_SIZE / 2)
+    love.graphics.setColor(1, 1, 1, 1)
+
+    -- map direction to arrow - temporary solution for showing player direction before sprites implementation
+    local arrow
+    local dirToArrow = {
+        l = '<',
+        r = '>',
+        u = '^',
+        d = 'v',
+    }
+    arrow = dirToArrow[self.direction]
+    if arrow == nil then
+        error("Unsupported direction: " .. self.direction)
+    end
+
+    love.graphics.print(arrow, x + TILE_SIZE / 2 - 5, y + TILE_SIZE / 2 - 5)
 end
 
 --- Moves the player in the specified direction and updates their coordinates.
 --- @param dir string # The direction to move the player ('u', 'd', 'l', 'r').
 function Player:move(dir)
     assert(dir ~= nil, 'dir is required')
-
+    assert(dir == 'u' or dir == 'd' or dir == 'l' or dir == 'r', 'unsupported dir: ' .. tostring(dir))
     local newPosition = self.coordinates:copy()
     if dir == 'u' then
         if self.coordinates.y == 1 then
@@ -55,6 +73,7 @@ function Player:move(dir)
         return
     end
     self.coordinates = newPosition
+    self.direction = dir
     targetTile:onEnter(self, self.level)
 end
 
