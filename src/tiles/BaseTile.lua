@@ -9,6 +9,8 @@ function BaseTile:init(coordinates)
     -- @type Coordinates
     self.coordinates = coordinates
     self.type = 'BaseTile'
+    --- When true player can take the tile, and place it in another place
+    self.canBePicked = true
 end
 
 --- Renders the tile onto the screen

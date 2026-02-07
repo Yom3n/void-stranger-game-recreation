@@ -4,6 +4,7 @@ WallTile = Class { __includes = BaseTile }
 
 function WallTile:init(coordinates)
     self.coordinates = coordinates
+    self.canBePicked = false
     self.type = 'WallTile'
 end
 

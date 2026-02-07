@@ -4,6 +4,7 @@ GoalTile = Class { __includes = BaseTile }
 
 function GoalTile:init(coordinates)
     self.coordinates = coordinates
+    self.canBePicked = true
     self.type = 'GoalTile'
 end
 

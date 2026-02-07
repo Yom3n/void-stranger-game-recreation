@@ -4,6 +4,7 @@ VoidTile = Class { __includes = BaseTile }
 
 function VoidTile:init(coordinates)
     self.coordinates = coordinates
+    self.canBePicked = false 
     self.type = 'VoidTile'
 end
 

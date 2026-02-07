@@ -2,6 +2,7 @@ FloorTile = Class { __includes = BaseTile }
 
 function FloorTile:init(coordinates)
     self.coordinates = coordinates
+    self.canBePicked = true
     self.type = 'FloorTile'
 end
 
