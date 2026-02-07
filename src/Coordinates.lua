@@ -25,3 +25,8 @@ end
 function Coordinates:copy()
     return Coordinates(self.x, self.y)
 end
+
+-- validates if coordinates are not out of bound
+function Coordinates:validate()
+    return self.x >= 1 and self.x <= LEVEL_WIDTH and self.y >= 1 and self.y <= LEVEL_HEIGHT
+end

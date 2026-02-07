@@ -81,6 +81,25 @@ end
 function Level:restart()
     StateMachine:change("game")
 end
+
+--- Replaces the tile at the specified coordinates with a `VoidTile`.
+-- Checks if the tile can be picked and if there are no objects on it before replacing.
+-- @param coordinates table A table containing `x` and `y` fields specifying the tile's position.
+-- @return boolean `true` if the tile was successfully replaced, `false` otherwise.
+function Level:replaceWithVoid(coordinates)
+    assert(coordinates ~= nil)
+    local target = self.tiles[coordinates.x][coordinates.y]
+    if not target.canBePicked then
+        return false
+    end
+    if self.objects[coordinates.x][coordinates.y] ~= nil then
+        -- Can't remove tile when there is object on it
+        return false
+    end
+    self.tiles[coordinates.x][coordinates.y] = VoidTile(coordinates)
+    return true
+end
+
 function Level:render()
     -- Don't merge these two loops.
     -- Causes issues with order of rendering when objects start moving on the map

@@ -20,6 +20,7 @@ local dirToArrow = {
     u = '^',
     d = 'v',
 }
+
 function Player:render()
     local x = self.coordinates:inGameX()
     local y = self.coordinates:inGameY()
@@ -73,6 +74,38 @@ function Player:move(dir)
     self.coordinates = newPosition
     self.direction = dir
     targetTile:onEnter(self, self.level)
+end
+
+--- trigger action on interaction key pressed.
+--- When player inventory is empty and player is facing pickable tile, then pick it up
+function Player:onInteractionKeyPressed()
+    local targetCords = self:getFacingTileCoordinates()
+    if not targetCords:validate() then
+        print("Invalid target coordinates in onInteractionKeyPressed")
+        return
+    end
+    local target = self.level:peekTile(targetCords)
+    local success = self.level:replaceWithVoid(targetCords)
+    if success then
+        -- TODO Add target to inventory
+    else
+        -- Play BEEP sound and not trigger end of round
+    end
+end
+
+-- Returns coordinates of the tile that player is looking at
+function Player:getFacingTileCoordinates()
+    local targetCords = self.coordinates:copy()
+    if self.direction == 'l' then
+        targetCords.x = targetCords.x - 1
+    elseif self.direction == 'r' then
+        targetCords.x = targetCords.x + 1
+    elseif self.direction == 'u' then
+        targetCords.y = targetCords.y - 1
+    elseif self.direction == 'd' then
+        targetCords.y = targetCords.y + 1
+    end
+    return targetCords
 end
 
 function Player:die()

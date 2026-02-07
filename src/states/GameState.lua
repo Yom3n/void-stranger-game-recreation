@@ -21,6 +21,10 @@ function GameState:update(dt)
         self.player:move('l', self.level)
     end
 
+    if love.keyboard.keypressed['space'] then
+        self.player:onInteractionKeyPressed()
+    end
+
 
     if self.player.lives <= 0 then
         StateMachine:change("gameOver")
