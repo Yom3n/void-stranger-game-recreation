@@ -76,12 +76,12 @@ function Player:move(dir)
     targetTile:onEnter(self, self.level)
 end
 
---- trigger action on ineraction key pressed.
+--- trigger action on interaction key pressed.
 --- When player inventory is empty and player is facing pickable tile, then pick it up
 function Player:onInteractionKeyPressed()
-    local targetCords = self:getFacingTileCordinates()
+    local targetCords = self:getFacingTileCoordinates()
     local target = self.level:peekTile(targetCords)
-    success = self.level:replaceWithVoid(targetCords)
+    local success = self.level:replaceWithVoid(targetCords)
     if success then
         -- TODO Add target to inventory
     else
@@ -90,7 +90,7 @@ function Player:onInteractionKeyPressed()
 end
 
 -- Returns coordinates of the tile that player is looking at
-function Player:getFacingTileCordinates()
+function Player:getFacingTileCoordinates()
     local targetCords = self.coordinates:copy()
     if self.direction == 'l' then
         targetCords.x = targetCords.x - 1
