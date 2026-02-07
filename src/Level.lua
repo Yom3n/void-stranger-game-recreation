@@ -67,17 +67,20 @@ function Level:init()
                     Check objectsBlueprintMapping for correct values]]
                     )
                 end
-                self.objects[i][j] = Object(Coordinates(i, j))
+                self.objects[i][j] = Object(Coordinates(i, j), self)
             end
         end
     end
 end
 
 -- Called when player reaches the GoalTile
-function Level:onReachedGoal()
+function Level:triggerWin()
     StateMachine:change("win")
 end
 
+function Level:restart()
+    StateMachine:change("game")
+end
 function Level:render()
     -- Don't merge these two loops.
     -- Causes issues with order of rendering when objects start moving on the map
