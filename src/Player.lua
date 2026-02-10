@@ -11,6 +11,8 @@ function Player:init(coordinates, level)
     self.level = level
     -- Direction the player is facing. Valid values: 'u', 'd', 'l', 'r' (same as move(dir)); reflects the last successful move.
     self.direction = 'l'
+    -- Tile that is currently in VoidStaff. When it's not nil, player can place this tile on any VoidTile on the map
+    self.voidStaffTile = nil
 end
 
 -- map direction to arrow - temporary solution for showing player direction before sprites implementation
@@ -76,24 +78,56 @@ function Player:move(dir)
     targetTile:onEnter(self, self.level)
 end
 
---- trigger action on interaction key pressed.
---- When player inventory is empty and player is facing pickable tile, then pick it up
-function Player:onInteractionKeyPressed()
-    local targetCords = self:getFacingTileCoordinates()
-    if not targetCords:validate() then
-        print("Invalid target coordinates in onInteractionKeyPressed")
+--- When player inventory is empty and player is facing pickable tile then this tile
+--- goes to Void Staff
+function Player:pickUpTile()
+    if self.voidStaffTile then
+        -- TODO Play beep sound
+        -- Inventory full, can't pick up another tile
         return
     end
+    local targetCords = self:getFacingTileCoordinates()
+    if not targetCords then
+        return
+    end
+    -- Get tile before its replaced with void
     local target = self.level:peekTile(targetCords)
     local success = self.level:replaceWithVoid(targetCords)
     if success then
-        -- TODO Add target to inventory
+        assert(target.canBePicked)
+        self.voidStaffTile = target
     else
-        -- Play BEEP sound and not trigger end of round
+        -- Play BEEP sound
+        -- Player tries to pick up not pickable tile
+    end
+end
+
+-- Places tile on the VoidTile that player is looking at
+function Player:placeTile()
+    if self.voidStaffTile == nil then
+        -- TODO Play beep sound
+        -- VoidStaff is empty
+        -- print("VoidStaff is empty")
+        return
+    end
+    assert(self.voidStaffTile.type ~= 'VoidTile', 'VoidTiles are not pickable, so never should be in the staff')
+    local targetCords = self:getFacingTileCoordinates()
+    if not targetCords then
+        print("Invalid target coords. Can't place tile")
+        return
+    end
+    self.voidStaffTile.coordinates = targetCords
+    local success = self.level:placeTile(self.voidStaffTile)
+    if success then
+        self.voidStaffTile = nil
+    else
+        -- Play BEEP sound
+        -- Couldn't place tile on this spot
     end
 end
 
 -- Returns coordinates of the tile that player is looking at
+-- Returns nil when trying reach out of level bounds
 function Player:getFacingTileCoordinates()
     local targetCords = self.coordinates:copy()
     if self.direction == 'l' then
@@ -104,6 +138,16 @@ function Player:getFacingTileCoordinates()
         targetCords.y = targetCords.y - 1
     elseif self.direction == 'd' then
         targetCords.y = targetCords.y + 1
+    end
+    if not targetCords:validate() then
+        print(
+            string.format(
+                "Invalid target coordinates in getFacingTileCoordinates: x=%s, y=%s",
+                tostring(targetCords.x),
+                tostring(targetCords.y)
+            )
+        )
+        return nil
     end
     return targetCords
 end

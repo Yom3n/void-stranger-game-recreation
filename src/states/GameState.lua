@@ -21,8 +21,11 @@ function GameState:update(dt)
         self.player:move('l', self.level)
     end
 
-    if love.keyboard.keypressed['space'] then
-        self.player:onInteractionKeyPressed()
+    if love.keyboard.keypressed['j'] then
+        self.player:pickUpTile()
+    end
+    if love.keyboard.keypressed['k'] then
+        self.player:placeTile()
     end
 
 
