@@ -86,13 +86,13 @@ function Player:pickUpTile()
         -- Inventory full, can't pick up another tile
         return
     end
-    local targetCords = self:getFacingTileCoordinates()
-    if not targetCords then
+    local targetCoords = self:getFacingTileCoordinates()
+    if not targetCoords then
         return
     end
     -- Get tile before its replaced with void
-    local target = self.level:peekTile(targetCords)
-    local success = self.level:replaceWithVoid(targetCords)
+    local target = self.level:peekTile(targetCoords)
+    local success = self.level:replaceWithVoid(targetCoords)
     if success then
         assert(target.canBePicked)
         self.voidStaffTile = target
@@ -111,12 +111,12 @@ function Player:placeTile()
         return
     end
     assert(self.voidStaffTile.type ~= 'VoidTile', 'VoidTiles are not pickable, so never should be in the staff')
-    local targetCords = self:getFacingTileCoordinates()
-    if not targetCords then
+    local targetCoords = self:getFacingTileCoordinates()
+    if not targetCoords then
         print("Invalid target coords. Can't place tile")
         return
     end
-    self.voidStaffTile.coordinates = targetCords
+    self.voidStaffTile.coordinates = targetCoords
     local success = self.level:placeTile(self.voidStaffTile)
     if success then
         self.voidStaffTile = nil
@@ -129,27 +129,27 @@ end
 -- Returns coordinates of the tile that player is looking at
 -- Returns nil when trying reach out of level bounds
 function Player:getFacingTileCoordinates()
-    local targetCords = self.coordinates:copy()
+    local targetCoords = self.coordinates:copy()
     if self.direction == 'l' then
-        targetCords.x = targetCords.x - 1
+        targetCoords.x = targetCoords.x - 1
     elseif self.direction == 'r' then
-        targetCords.x = targetCords.x + 1
+        targetCoords.x = targetCoords.x + 1
     elseif self.direction == 'u' then
-        targetCords.y = targetCords.y - 1
+        targetCoords.y = targetCoords.y - 1
     elseif self.direction == 'd' then
-        targetCords.y = targetCords.y + 1
+        targetCoords.y = targetCoords.y + 1
     end
-    if not targetCords:validate() then
+    if not targetCoords:validate() then
         print(
             string.format(
                 "Invalid target coordinates in getFacingTileCoordinates: x=%s, y=%s",
-                tostring(targetCords.x),
-                tostring(targetCords.y)
+                tostring(targetCoords.x),
+                tostring(targetCoords.y)
             )
         )
         return nil
     end
-    return targetCords
+    return targetCoords
 end
 
 function Player:die()
