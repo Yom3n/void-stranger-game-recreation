@@ -23,7 +23,7 @@ function Level:init()
         { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
         { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
         { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'fP', 'f', 'G', 'f', 'f', 'f', 'w', },
+        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'fP', 'f', 'f', 'f', 'f', 'f', 'w', },
         { 'w', 'f', 'G', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
         { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
         { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',  'w', 'w', 'w', 'w', 'w', 'w', },
@@ -97,6 +97,26 @@ function Level:replaceWithVoid(coordinates)
         return false
     end
     self.tiles[coordinates.x][coordinates.y] = VoidTile(coordinates)
+    return true
+end
+
+--- Replaces existing VoidTile with new tile
+--- Only VoidTiles can be replaced
+function Level:placeTile(tile)
+    assert(tile)
+    assert(tile.type ~= 'VoidTile')
+    local coordinates = tile.coordinates
+    local target = self.tiles[coordinates.x][coordinates.y]
+    if target.type ~= 'VoidTile' then
+        print('Tiles can be placed only on VoidTiles')
+        return false
+    end
+    if self.objects[coordinates.x][coordinates.y] ~= nil then
+        -- Can't place tile when there is an object on this tile
+        return false
+    end
+    self.tiles[coordinates.x][coordinates.y] = tile
+    -- print(string.format("Succesfully placed tile %s on %s, %s", tile.type, coordinates.x, coordinates.y))
     return true
 end
 
