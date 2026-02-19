@@ -13,21 +13,16 @@ local objectsBlueprintMapping = {
     P = Player
 }
 
-function Level:init()
-    -- Human readable map that lets us simply draw levels.
-    -- First symbol is always a Floor type based on tilesBlueprintMapping
-    -- Second symbol is optional and represents character or object on the tile (usually on Floor tiles).
-    -- Mapping of second symbol is based on objectsBlueprintMapping
-    local levelBlueprint = {
-        { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',  'w', 'w', 'w', 'w', 'w', 'w', },
-        { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'fP', 'f', 'f', 'f', 'f', 'f', 'w', },
-        { 'w', 'f', 'G', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
-        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
-        { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',  'w', 'w', 'w', 'w', 'w', 'w', },
-    }
+--- Initializes a Level instance with a blueprint structure.
+---
+--- The levelBlueprint is a 2D table where each cell contains a string representing
+--- a tile type and optionally an object on that tile.
+---
+---
+--- The blueprint is indexed as [row][column] and must match LEVEL_HEIGHT and LEVEL_WIDTH.
+---
+--- @param levelBlueprint table A 2D table representing the level layout
+function Level:init(levelBlueprint)
     assert(#levelBlueprint == LEVEL_HEIGHT, "Invalid blueprint")
     assert(#levelBlueprint[1] == LEVEL_WIDTH, "Invalid blueprint")
     self.tiles = {}
