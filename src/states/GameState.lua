@@ -1,24 +1,9 @@
 GameState = Class { __includes = BaseState }
 
-function GameState:init()
-    -- Human readable map that lets us simply draw levels.
-    -- First symbol is always a Floor type based on tilesBlueprintMapping
-    -- Second symbol is optional and represents character or object on the tile (usually on Floor tiles).
-    -- Mapping of second symbol is based on objectsBlueprintMapping
-    local levelBlueprint = {
-        { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',  'w', 'w', 'w', 'w', 'w', 'w', },
-        { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'v', 'v', 'v', 'v', 'v', 'v', 'v',  'v', 'v', 'v', 'v', 'v', 'w', },
-        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'fP', 'f', 'f', 'f', 'f', 'f', 'w', },
-        { 'w', 'f', 'G', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
-        { 'w', 'f', 'f', 'f', 'v', 'f', 'f', 'f',  'f', 'f', 'f', 'f', 'f', 'w', },
-        { 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w',  'w', 'w', 'w', 'w', 'w', 'w', },
-    }
 
-    self.level = Level(levelBlueprint)
-    self.player = self.level:getPlayer()
-    assert(self.player ~= nil, 'Player must exist on the level')
+function GameState:init()
+    self.levelIndex = 1
+    self:loadLevel(self.levelIndex)
 end
 
 function GameState:render()
@@ -47,4 +32,13 @@ function GameState:update(dt)
     if self.player.lives <= 0 then
         StateMachine:change("gameOver")
     end
+end
+
+-- levelIndex is a number starting from 1
+function GameState:loadLevel(levelIndex)
+    local levelBp = Levels[levelIndex]
+    assert(levelBp ~= nil, 'Level ' .. tostring(levelIndex) .. ' does not exist')
+    self.level = Level(levelBp)
+    self.player = self.level:getPlayer()
+    assert(self.player ~= nil, 'Player must exist on the level')
 end

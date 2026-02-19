@@ -23,8 +23,22 @@ local objectsBlueprintMapping = {
 ---
 --- @param levelBlueprint table A 2D table representing the level layout
 function Level:init(levelBlueprint)
-    assert(#levelBlueprint == LEVEL_HEIGHT, "Invalid blueprint")
-    assert(#levelBlueprint[1] == LEVEL_WIDTH, "Invalid blueprint")
+    assert(
+        #levelBlueprint == LEVEL_HEIGHT,
+        string.format(
+            "Invalid blueprint: expected height of %d, got %d",
+            LEVEL_HEIGHT,
+            #levelBlueprint
+        )
+    )
+    assert(
+        #levelBlueprint[1] == LEVEL_WIDTH,
+        string.format(
+            "Invalid blueprint: expected width of %d, got %d",
+            LEVEL_WIDTH,
+            #levelBlueprint[1]
+        )
+    )
     self.tiles = {}
     self.objects = {}
     for i = 1, LEVEL_WIDTH do
