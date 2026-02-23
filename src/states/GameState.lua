@@ -28,10 +28,6 @@ function GameState:update(dt)
         self.player:placeTile()
     end
 
-
-    if self.player.lives <= 0 then
-        StateMachine:change("gameOver")
-    end
 end
 
 -- levelIndex is a number starting from 1
