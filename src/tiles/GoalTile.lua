@@ -20,7 +20,7 @@ end
 --- Called whenever any entity enter the tile
 function GoalTile:onEnter(entity, level)
     if entity.type == 'Player' then
-        level:triggerWin()
+        level:onGoalReached()
     end
 end
 

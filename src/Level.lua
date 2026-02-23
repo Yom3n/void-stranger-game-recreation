@@ -22,7 +22,8 @@ local objectsBlueprintMapping = {
 --- The blueprint is indexed as [row][column] and must match LEVEL_HEIGHT and LEVEL_WIDTH.
 ---
 --- @param levelBlueprint table A 2D table representing the level layout
-function Level:init(levelBlueprint)
+--- @param callbacks table Table containing all level callbacks
+function Level:init(levelBlueprint, callbacks)
     assert(
         #levelBlueprint == LEVEL_HEIGHT,
         string.format(
@@ -39,6 +40,11 @@ function Level:init(levelBlueprint)
             #levelBlueprint[1]
         )
     )
+    assert(callbacks ~= nil, "callbacks parameter is required")
+    assert(callbacks.onGoalReached ~= nil, "callbacks.onGoalReached function is required")
+    -- callback function called when player reaches the goal tile
+    self.onGoalReachedCallback = callbacks.onGoalReached
+
     self.tiles = {}
     self.objects = {}
     for i = 1, LEVEL_WIDTH do
@@ -83,8 +89,8 @@ function Level:init(levelBlueprint)
 end
 
 -- Called when player reaches the GoalTile
-function Level:triggerWin()
-    StateMachine:change("win")
+function Level:onGoalReached()
+    self.onGoalReachedCallback()
 end
 
 function Level:restart()
