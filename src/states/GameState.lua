@@ -2,7 +2,7 @@ GameState = Class { __includes = BaseState }
 
 
 function GameState:init()
-    self.levelIndex = 3
+    self.levelIndex = 1
     self:loadLevel(self.levelIndex)
 end
 

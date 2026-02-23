@@ -155,5 +155,9 @@ end
 function Player:die()
     -- TODO We can can play some sound and animation
     self.lives = self.lives - 1
+    if self.lives <= 0 then
+        StateMachine:change('gameOver')
+        return
+    end
     self.level:restart()
 end
