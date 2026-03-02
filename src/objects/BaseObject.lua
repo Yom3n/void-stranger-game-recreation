@@ -1,10 +1,10 @@
 BaseObject = Class {}
 
--- Servers as any object that can be placed on tiles - including Payer and Enemies
+-- Serves as any object that can be placed on tiles - including Player and Enemies
 function BaseObject:init(coordinates)
     -- @type Coordinates
     self.coordinates = coordinates
-    self.type = 'BaseTile'
+    self.type = 'BaseObject'
 end
 
 --- Renders the object onto the screen

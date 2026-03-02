@@ -15,3 +15,7 @@ function Egg:render()
         self.coordinates:inGameY() + TILE_SIZE / 2,
         TILE_SIZE / 2)
 end
+
+function Egg:move(dir)
+
+end

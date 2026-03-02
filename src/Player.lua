@@ -1,4 +1,4 @@
-Player = Class {}
+Player = Class { __includes = BaseObject }
 
 --- @param level table # The level object containing the map and tiles.
 function Player:init(coordinates, level)
@@ -41,32 +41,10 @@ end
 --- @param dir string # The direction to move the player ('u', 'd', 'l', 'r').
 function Player:move(dir)
     assert(dir ~= nil, 'dir is required')
-    assert(dir == 'u' or dir == 'd' or dir == 'l' or dir == 'r', 'unsupported dir: ' .. tostring(dir))
-    local newPosition = self.coordinates:copy()
-    if dir == 'u' then
-        if self.coordinates.y == 1 then
-            -- can't move outside of the screen
-            return
-        end
-        newPosition.y = newPosition.y - 1
-    elseif dir == 'd' then
-        if self.coordinates.y == LEVEL_HEIGHT then
-            -- can't move outside of the screen
-            return
-        end
-        newPosition.y = newPosition.y + 1
-    elseif dir == 'l' then
-        if self.coordinates.x == 1 then
-            -- can't move outside of the screen
-            return
-        end
-        newPosition.x = newPosition.x - 1
-    elseif dir == 'r' then
-        if self.coordinates.x == LEVEL_WIDTH then
-            -- can't move outside of the screen
-            return
-        end
-        newPosition.x = newPosition.x + 1
+    local newPosition = self.coordinates:nextToTile(dir)
+    if newPosition == nil then
+        -- Tries to move outside boundaries
+        return
     end
 
     local targetTile = self.level:peekTile(newPosition)
