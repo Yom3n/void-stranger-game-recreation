@@ -10,7 +10,8 @@ local tilesBlueprintMapping = {
 
 -- Maps all characters/enemies or objects that are on the map
 local objectsBlueprintMapping = {
-    P = Player
+    P = Player,
+    e = Egg
 }
 
 --- Initializes a Level instance with a blueprint structure.
@@ -74,15 +75,15 @@ function Level:init(levelBlueprint, callbacks)
 
             if valueLength == 2 then
                 local objVal = string.sub(bpValue, 2, 2)
-                local Object = objectsBlueprintMapping[objVal]
-                if Object == nil then
+                local ObjectClass = objectsBlueprintMapping[objVal]
+                if ObjectClass == nil then
                     error(
                         objVal ..
                         [[ is unsupported level object value.
                     Check objectsBlueprintMapping for correct values]]
                     )
                 end
-                self.objects[i][j] = Object(Coordinates(i, j), self)
+                self.objects[i][j] = ObjectClass(Coordinates(i, j), self)
             end
         end
     end

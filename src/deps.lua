@@ -32,6 +32,10 @@ require 'src.tiles.GoalTile'
 -- Playable character
 require 'src.Player'
 
+-- OBJECTS
+require 'src.objects.BaseObject'
+require 'src.objects.Egg'
+
 --- Stores all levels in the game
 require 'src.levels'
 -- Groups tiles into a level
