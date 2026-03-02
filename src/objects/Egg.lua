@@ -17,5 +17,5 @@ function Egg:render()
 end
 
 function Egg:move(dir)
-
+ -- TODO
 end
