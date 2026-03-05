@@ -10,3 +10,13 @@ end
 --- Renders the object onto the screen
 function BaseObject:render()
 end
+
+-- Removes object from level
+function BaseObject:die()
+end
+
+--- Check if Player can push the object in provided direction
+--- Returns bool
+function BaseObject:canBePushed(dir)
+    return false
+end

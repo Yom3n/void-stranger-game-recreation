@@ -159,6 +159,19 @@ function Level:peekTile(coordinates)
     return self.tiles[coordinates.x][coordinates.y]
 end
 
+function Level:peekObject(coordinates)
+    assert(coordinates ~= nil, 'Coordinates can\'t be nil')
+    return self.objects[coordinates.x][coordinates.y]
+end
+
+--- Removes object from the level
+function Level:removeObject(coordinates)
+    assert(coordinates ~= nil, 'Coordinates can\'t be nil')
+    local obj = self.objects[coordinates.x][coordinates.y]
+    assert(obj ~= nil, string.format('No object on coordinates %d:%d', coordinates.x, coordinates.y))
+    self.objects[coordinates.x][coordinates.y] = nil
+end
+
 function Level:getPlayer()
     for i = 1, LEVEL_WIDTH do
         for j = 1, LEVEL_HEIGHT do

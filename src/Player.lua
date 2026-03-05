@@ -51,6 +51,16 @@ function Player:move(dir)
     if not targetTile:canEnter(self) then
         return
     end
+    local targetObject = self.level:peekObject(newPosition)
+    if targetObject ~= nil then
+        if targetObject:canBePushed(dir) then
+            -- push the object if possible and continue move
+            targetObject:move(dir)
+        else
+            -- Can't move - blocking object
+            return
+        end
+    end
     self.coordinates = newPosition
     self.direction = dir
     targetTile:onEnter(self, self.level)
