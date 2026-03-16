@@ -1,5 +1,4 @@
 Level = Class {}
-
 --- Maps blueprint symbols to tiles
 local tilesBlueprintMapping = {
     w = WallTile,
@@ -10,7 +9,8 @@ local tilesBlueprintMapping = {
 
 -- Maps all characters/enemies or objects that are on the map
 local objectsBlueprintMapping = {
-    P = Player
+    P = Player,
+    e = Egg
 }
 
 --- Initializes a Level instance with a blueprint structure.
@@ -74,15 +74,15 @@ function Level:init(levelBlueprint, callbacks)
 
             if valueLength == 2 then
                 local objVal = string.sub(bpValue, 2, 2)
-                local Object = objectsBlueprintMapping[objVal]
-                if Object == nil then
+                local ObjectClass = objectsBlueprintMapping[objVal]
+                if ObjectClass == nil then
                     error(
                         objVal ..
                         [[ is unsupported level object value.
                     Check objectsBlueprintMapping for correct values]]
                     )
                 end
-                self.objects[i][j] = Object(Coordinates(i, j), self)
+                self.objects[i][j] = ObjectClass(Coordinates(i, j), self)
             end
         end
     end
@@ -158,6 +158,19 @@ function Level:peekTile(coordinates)
     return self.tiles[coordinates.x][coordinates.y]
 end
 
+function Level:peekObject(coordinates)
+    assert(coordinates ~= nil, 'Coordinates can\'t be nil')
+    return self.objects[coordinates.x][coordinates.y]
+end
+
+--- Removes object from the level
+function Level:removeObject(coordinates)
+    assert(coordinates ~= nil, 'Coordinates can\'t be nil')
+    local obj = self.objects[coordinates.x][coordinates.y]
+    assert(obj ~= nil, string.format('No object on coordinates %d:%d', coordinates.x, coordinates.y))
+    self.objects[coordinates.x][coordinates.y] = nil
+end
+
 function Level:getPlayer()
     for i = 1, LEVEL_WIDTH do
         for j = 1, LEVEL_HEIGHT do
@@ -168,4 +181,39 @@ function Level:getPlayer()
         end
     end
     error('Player not spawned on the level')
+end
+
+--- Check if obj can be moved to coordinates.
+--- Returns true when move is possible, or false when its not
+--- TODO Every object now should call this in his move
+function Level:tryMoveObject(obj, coordinates, dir, settings)
+    assert(obj ~= nil, 'obj cant be null')
+    assert(coordinates ~= nil, 'coordinates cant be null')
+    if settings == nil or settings.canPush == nil then
+        -- whether object can push Eggs on move
+        settings = { canPush = false }
+    end
+
+    local targetTile = self.tiles[coordinates.x][coordinates.y]
+    if not targetTile:canEnter(obj) then
+        return false
+    end
+    local targetObject = self.objects[coordinates.x][coordinates.y]
+    if targetObject ~= nil then
+        if settings.canPush and targetObject:canBePushed(dir) then
+            local pushed = targetObject:move(dir)
+            if not pushed then
+                -- Push blocked
+                return false
+            end
+        else
+            -- Can't move to occupied tile
+            return false
+        end
+    end
+
+    -- remove object from old position and move to new one
+    self.objects[obj.coordinates.x][obj.coordinates.y] = nil
+    self.objects[coordinates.x][coordinates.y] = obj
+    return true
 end

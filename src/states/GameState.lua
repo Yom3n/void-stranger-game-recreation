@@ -27,7 +27,6 @@ function GameState:update(dt)
     if love.keyboard.keypressed['k'] then
         self.player:placeTile()
     end
-
 end
 
 -- levelIndex is a number starting from 1

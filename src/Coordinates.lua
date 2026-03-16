@@ -30,3 +30,37 @@ end
 function Coordinates:validate()
     return self.x >= 1 and self.x <= LEVEL_WIDTH and self.y >= 1 and self.y <= LEVEL_HEIGHT
 end
+
+--- Get coordinates of next tile in provide dir.
+--- Returns nil when neighbor tile does not exist
+function Coordinates:nextToTile(dir)
+    assert(dir ~= nil, 'dir is required')
+    assert(dir == 'u' or dir == 'd' or dir == 'l' or dir == 'r', 'unsupported dir: ' .. tostring(dir))
+    local target = self:copy()
+    if dir == 'u' then
+        if self.y == 1 then
+            -- outside boundaries
+            return nil
+        end
+        target.y = target.y - 1
+    elseif dir == 'd' then
+        if self.y == LEVEL_HEIGHT then
+            -- outside boundaries
+            return nil
+        end
+        target.y = target.y + 1
+    elseif dir == 'l' then
+        if self.x == 1 then
+            -- outside boundaries
+            return nil
+        end
+        target.x = target.x - 1
+    elseif dir == 'r' then
+        if self.x == LEVEL_WIDTH then
+            -- outside boundaries
+            return nil
+        end
+        target.x = target.x + 1
+    end
+    return target
+end
