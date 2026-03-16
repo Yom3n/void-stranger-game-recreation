@@ -23,13 +23,15 @@ end
 ---  that user can't enter (for example already occupied tiles)
 function Egg:move(dir)
     local targetCoordinates = self.coordinates:nextToTile(dir)
-    local targetTile = self.level:peekTile(targetCoordinates)
-    if targetTile:canEnter(self, self.level) then
+    local moved = self.level:tryMoveObject(self, targetCoordinates, dir, {
+        canPush = false,
+    })
+    if moved then
         self.coordinates = targetCoordinates
+        local targetTile = self.level:peekTile(targetCoordinates)
         targetTile:onEnter(self, self.level)
-        return true
     end
-    return false
+    return moved 
 end
 
 function Egg:die()

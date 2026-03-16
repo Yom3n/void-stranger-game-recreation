@@ -46,24 +46,17 @@ function Player:move(dir)
         -- Tries to move outside boundaries
         return
     end
-
-    local targetTile = self.level:peekTile(newPosition)
-    if not targetTile:canEnter(self) then
-        return
+    local moved = self.level:tryMoveObject(self, newPosition, dir, {
+        canPush = true
+    })
+    if moved then
+        self.coordinates = newPosition
+        self.direction = dir
+        -- TODO I don't like that player need to call targetTile:onEnter by itself
+        local targetTile = self.level:peekTile(newPosition)
+        targetTile:onEnter(self, self.level)
     end
-    local targetObject = self.level:peekObject(newPosition)
-    if targetObject ~= nil then
-        if targetObject:canBePushed(dir) then
-            -- push the object if possible and continue move
-            targetObject:move(dir)
-        else
-            -- Can't move - blocking object
-            return
-        end
-    end
-    self.coordinates = newPosition
-    self.direction = dir
-    targetTile:onEnter(self, self.level)
+    return moved
 end
 
 --- When player inventory is empty and player is facing pickable tile then this tile

@@ -184,23 +184,32 @@ function Level:getPlayer()
 end
 
 --- Check if obj can be moved to coordinates.
---- Returns true whan move is possible, or false when its not
---- TODO Every object now should call this in this move
-function Level:tryMoveObject(obj, coordinates, settings)
-    assert(obj ~= nil, 'ojb cant be null')
+--- Returns true when move is possible, or false when its not
+--- TODO Every object now should call this in his move
+function Level:tryMoveObject(obj, coordinates, dir, settings)
+    assert(obj ~= nil, 'obj cant be null')
     assert(coordinates ~= nil, 'coordinates cant be null')
-    if settings == nil or settings.canEnterVoid == nil then
-        settings = { canEnterVoid = false }
+    if settings == nil or settings.canPush == nil then
+        -- whether object can push Eggs on move
+        settings = { canPush = false }
     end
 
     local targetTile = self.tiles[coordinates.x][coordinates.y]
-    if not targetTile:canEnter() and not settings.canEnterVoid then
+    if not targetTile:canEnter() then
         return false
     end
     local targetObject = self.objects[coordinates.x][coordinates.y]
     if targetObject ~= nil then
-        -- Can't move to occupied tile
-        return false
+        if settings.canPush and targetObject:canBePushed(dir) then
+            local pushed = targetObject:move(dir)
+            if not pushed then
+                -- Push blocked
+                return false
+            end
+        else
+            -- Can't move to occupied tile
+            return false
+        end
     end
 
     -- remove object from old position and move to new one
