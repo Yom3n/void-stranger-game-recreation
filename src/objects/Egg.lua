@@ -22,7 +22,11 @@ end
 --- Eggs can be pushed, but can't move through Walls, and other objects
 ---  that user can't enter (for example already occupied tiles)
 function Egg:move(dir)
+    assert(dir ~= nil, 'dir is required')
     local targetCoordinates = self.coordinates:nextToTile(dir)
+    if targetCoordinates == nil then
+        return false
+    end
     local moved = self.level:tryMoveObject(self, targetCoordinates, dir, {
         canPush = false,
     })
@@ -39,13 +43,17 @@ function Egg:die()
     self.level:removeObject(self.coordinates)
 end
 
---- Chekc if Player cna push the object
+--- Checks if Player can push the object
 function Egg:canBePushed(dir)
+    assert(dir ~= nil)
     local targetCoordinates = self.coordinates:nextToTile(dir)
+    if targetCoordinates == nil then
+        return false
+    end
     local targetTile = self.level:peekTile(targetCoordinates)
     local targetObject = self.level:peekObject(targetCoordinates)
     if targetObject ~= nil then
         return false
     end
-    return targetTile:canEnter()
+    return targetTile:canEnter(self)
 end

@@ -195,7 +195,7 @@ function Level:tryMoveObject(obj, coordinates, dir, settings)
     end
 
     local targetTile = self.tiles[coordinates.x][coordinates.y]
-    if not targetTile:canEnter() then
+    if not targetTile:canEnter(obj) then
         return false
     end
     local targetObject = self.objects[coordinates.x][coordinates.y]
