@@ -37,6 +37,7 @@ function Player:render()
         print("Quads not yet instantiated. Can not render Player")
         return
     end
+    love.graphics.setColor(255,255,255,255);
     love.graphics.draw(Sprites.characterSheet, quad, x, y)
 end
 
