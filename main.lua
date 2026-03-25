@@ -1,10 +1,23 @@
 require 'src/deps'
 
 
+
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     math.randomseed(os.time())
     love.window.setTitle("Void stranger")
+
+    Sprites = {
+        characterSheet = love.graphics.newImage('assets/graphics/characterSpriteSheet.png')
+    }
+
+    local characterQuads = GenerateQuads(Sprites.characterSheet, 1)
+    CharacterQuads = {
+        charDown = characterQuads[1],
+        charUp = characterQuads[2],
+        charRight = characterQuads[3],
+        charLeft = characterQuads[4],
+    }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,

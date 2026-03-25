@@ -12,8 +12,10 @@ push = require 'lib.push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'lib.class'
 
+
 require 'lib.StateMachine'
 
+require 'src.Util'
 
 -- Contains all constants
 require 'src.constants'
