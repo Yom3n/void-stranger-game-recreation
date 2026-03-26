@@ -15,26 +15,40 @@ function Player:init(coordinates, level)
     self.voidStaffTile = nil
 end
 
--- map direction to arrow - temporary solution for showing player direction before sprites implementation
-local dirToArrow = {
-    l = '<',
-    r = '>',
-    u = '^',
-    d = 'v',
+-- maps direction to CharacterQuads field name
+local dirToQuadField = {
+    l = "charLeft",
+    r = "charRight",
+    u = "charUp",
+    d = "charDown",
 }
+
+-- maps player direction to character sprite quad
+local function dirToQuad(dir)
+    if CharacterQuads == nil then
+        return
+    end
+    local quadField = dirToQuadField[dir]
+    if quadField == nil then
+        error('Invalid direction: ' .. tostring(dir))
+    end
+    return CharacterQuads[quadField]
+end
 
 function Player:render()
     local x = self.coordinates:inGameX()
     local y = self.coordinates:inGameY()
-    love.graphics.setColor(1, 0, 0, 1)
-    love.graphics.circle("fill", x + TILE_SIZE / 2, y + TILE_SIZE / 2, TILE_SIZE / 2)
-    love.graphics.setColor(1, 1, 1, 1)
-
-    local arrow = dirToArrow[self.direction]
-    if arrow == nil then
-        error("Unsupported direction: " .. self.direction)
+    if CharacterQuads == nil then
+        print("CharacterQuads not yet instantiated. Can not render Player")
+        return
     end
-    love.graphics.print(arrow, x + TILE_SIZE / 2 - 5, y + TILE_SIZE / 2 - 5)
+    local quad = dirToQuad(self.direction)
+    if quad == nil then
+        print("Unsupported player direction for rendering: " .. tostring(self.direction))
+        return
+    end
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(Sprites.characterSheet, quad, x, y)
 end
 
 --- Moves the player in the specified direction and updates their coordinates.
@@ -110,6 +124,7 @@ end
 -- Returns coordinates of the tile that player is looking at
 -- Returns nil when trying reach out of level bounds
 function Player:getFacingTileCoordinates()
+    -- TODO use coordinates:nextToTile(dir)
     local targetCoords = self.coordinates:copy()
     if self.direction == 'l' then
         targetCoords.x = targetCoords.x - 1
