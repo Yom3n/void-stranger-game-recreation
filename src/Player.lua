@@ -15,29 +15,39 @@ function Player:init(coordinates, level)
     self.voidStaffTile = nil
 end
 
+-- maps direction to CharacterQuads field name
+local dirToQuadField = {
+    l = "charLeft",
+    r = "charRight",
+    u = "charUp",
+    d = "charDown",
+}
+
 -- maps player direction to character sprite quad
 local function dirToQuad(dir)
     if CharacterQuads == nil then
         return
     end
-    local dirToQuad = {
-        l = CharacterQuads.charLeft,
-        r = CharacterQuads.charRight,
-        u = CharacterQuads.charUp,
-        d = CharacterQuads.charDown
-    }
-    return dirToQuad[dir]
+    local quadField = dirToQuadField[dir]
+    if quadField == nil then
+        error('Invalid direction: ' .. tostring(dir))
+    end
+    return CharacterQuads[quadField]
 end
 
 function Player:render()
     local x = self.coordinates:inGameX()
     local y = self.coordinates:inGameY()
-    local quad = dirToQuad(self.direction)
-    if quad == nil then
-        print("Quads not yet instantiated. Can not render Player")
+    if CharacterQuads == nil then
+        print("CharacterQuads not yet instantiated. Can not render Player")
         return
     end
-    love.graphics.setColor(255,255,255,255);
+    local quad = dirToQuad(self.direction)
+    if quad == nil then
+        print("Unsupported player direction for rendering: " .. tostring(self.direction))
+        return
+    end
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.draw(Sprites.characterSheet, quad, x, y)
 end
 

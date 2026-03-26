@@ -10,8 +10,8 @@ function GenerateQuads(spriteSheet, numColumns)
     local quads = {}
 
     local numItemsInRow = width / tileWidth
-    for i = 0, numColumns, 1 do
-        for j = 0, numItemsInRow, 1 do
+    for i = 0, numColumns - 1, 1 do
+        for j = 0, numItemsInRow - 1, 1 do
             quads[spriteIndex] = love.graphics.newQuad(j * tileWidth, i * tileHeight, tileWidth, tileHeight,
                 spriteSheet:getDimensions())
             spriteIndex = spriteIndex + 1
