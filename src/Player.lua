@@ -81,7 +81,7 @@ function Player:pickUpTile()
         -- Inventory full, can't pick up another tile
         return
     end
-    local targetCoords = self:getFacingTileCoordinates()
+    local targetCoords = self.coordinates:nextToTile(self.direction)
     if not targetCoords then
         return
     end
@@ -106,7 +106,7 @@ function Player:placeTile()
         return
     end
     assert(self.voidStaffTile.type ~= 'VoidTile', 'VoidTiles are not pickable, so never should be in the staff')
-    local targetCoords = self:getFacingTileCoordinates()
+    local targetCoords = self.coordinates:nextToTile(self.direction)
     if not targetCoords then
         print("Invalid target coords. Can't place tile")
         return
@@ -119,33 +119,6 @@ function Player:placeTile()
         -- Play BEEP sound
         -- Couldn't place tile on this spot
     end
-end
-
--- Returns coordinates of the tile that player is looking at
--- Returns nil when trying reach out of level bounds
-function Player:getFacingTileCoordinates()
-    -- TODO use coordinates:nextToTile(dir)
-    local targetCoords = self.coordinates:copy()
-    if self.direction == 'l' then
-        targetCoords.x = targetCoords.x - 1
-    elseif self.direction == 'r' then
-        targetCoords.x = targetCoords.x + 1
-    elseif self.direction == 'u' then
-        targetCoords.y = targetCoords.y - 1
-    elseif self.direction == 'd' then
-        targetCoords.y = targetCoords.y + 1
-    end
-    if not targetCoords:validate() then
-        print(
-            string.format(
-                "Invalid target coordinates in getFacingTileCoordinates: x=%s, y=%s",
-                tostring(targetCoords.x),
-                tostring(targetCoords.y)
-            )
-        )
-        return nil
-    end
-    return targetCoords
 end
 
 function Player:die()
