@@ -6,8 +6,6 @@ function Player:init(coordinates, level)
     assert(level ~= nil, 'Level is required')
     self.coordinates = coordinates
     self.type = 'Player'
-    --- number of tries uesr can fail without ending a game
-    self.lives = 1
     self.level = level
     -- Direction the player is facing. Valid values: 'u', 'd', 'l', 'r' (same as move(dir)); reflects the last successful move.
     self.direction = 'l'
@@ -123,10 +121,5 @@ end
 
 function Player:die()
     -- TODO We can can play some sound and animation
-    self.lives = self.lives - 1
-    if self.lives <= 0 then
-        StateMachine:change('gameOver')
-        return
-    end
-    self.level:restart()
+    self.level:onPlayerDeath()
 end

@@ -4,10 +4,13 @@ GameState = Class { __includes = BaseState }
 function GameState:init()
     self.levelIndex = 1
     self:loadLevel(self.levelIndex)
+    self.playerLives = 3
 end
 
 function GameState:render()
     self.level:render()
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.printf(tostring(self.playerLives) .. " lives", -5, 5, VIRTUAL_WIDTH, 'right')
 end
 
 function GameState:update(dt)
@@ -39,6 +42,14 @@ function GameState:loadLevel(levelIndex)
     self.level = Level(levelBp, {
         onGoalReached = function()
             self:loadNextLevel()
+        end,
+        onPlayerDeath = function()
+            self.playerLives = self.playerLives - 1
+            if self.playerLives <= 0 then
+                StateMachine:change("gameOver")
+                return
+            end
+            self:loadLevel(self.levelIndex)
         end
     })
     self.player = self.level:getPlayer()

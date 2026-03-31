@@ -42,8 +42,8 @@ function Level:init(levelBlueprint, callbacks)
     )
     assert(callbacks ~= nil, "callbacks parameter is required")
     assert(callbacks.onGoalReached ~= nil, "callbacks.onGoalReached function is required")
-    -- callback function called when player reaches the goal tile
-    self.onGoalReachedCallback = callbacks.onGoalReached
+    assert(callbacks.onPlayerDeath ~= nil, "onPlayerDeath function is required")
+    self.callbacks = callbacks
 
     self.tiles = {}
     self.objects = {}
@@ -90,11 +90,11 @@ end
 
 -- Called when player reaches the GoalTile
 function Level:onGoalReached()
-    self.onGoalReachedCallback()
+    self.callbacks.onGoalReached()
 end
 
-function Level:restart()
-    StateMachine:change("game")
+function Level:onPlayerDeath()
+    self.callbacks.onPlayerDeath()
 end
 
 --- Replaces the tile at the specified coordinates with a `VoidTile`.
