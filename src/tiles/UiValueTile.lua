@@ -1,4 +1,4 @@
---- @class Tile representing an UI bar. In this game palyer in some places can step on ui and mess up with values on it
+--- @class Tile representing an UI bar. In this game player in some places can step on ui and mess up with values on it
 UiBlankTile = Class { __includes = BaseTile }
 
 function UiBlankTile:init(coordinates)
