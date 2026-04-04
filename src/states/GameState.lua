@@ -9,6 +9,7 @@ end
 
 function GameState:render()
     self.level:render()
+    -- This is temporarry UI. Later this information is going to be on lowest row of level tiles
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.printf(tostring(self.playerLives) .. " lives", -5, 5, VIRTUAL_WIDTH, 'right')
 end
