@@ -2,7 +2,7 @@
 function GenerateUiBar()
     local result = {
         UiBlankTile(Coordinates(1, LEVEL_HEIGHT)),
-        UiBlankTile(Coordinates(2, LEVEL_HEIGHT)),
+        UiHpIconTile(Coordinates(2, LEVEL_HEIGHT)),
         UiBlankTile(Coordinates(3, LEVEL_HEIGHT)),
         UiBlankTile(Coordinates(4, LEVEL_HEIGHT)),
         UiBlankTile(Coordinates(5, LEVEL_HEIGHT)),

@@ -32,6 +32,7 @@ require 'src.tiles.VoidTile'
 require 'src.tiles.GoalTile'
 
 require 'src.tiles.UiBlankTile'
+require 'src.tiles.UiHpIconTile'
 
 require 'src.ui.ui_bar'
 
