@@ -49,7 +49,7 @@ function Level:init(levelBlueprint, callbacks)
     self.tiles = {}
     self.objects = {}
 
-    local uiBar = GenerateUiBar()
+    local uiBar = UiBar(StateMachine)
 
     for i = 1, LEVEL_WIDTH do
         self.tiles[i] = {}
@@ -57,7 +57,7 @@ function Level:init(levelBlueprint, callbacks)
         for j = 1, LEVEL_HEIGHT do
             if j == LEVEL_HEIGHT then
                 -- Last row is for UI bar
-                self.tiles[i][j] = uiBar[i]
+                self.tiles[i][j] = uiBar.tiles[i]
             else
                 -- In lua tables use [row][column] annotation,
                 -- but I'm flipping it to make it blueprint more human readable

@@ -3,15 +3,16 @@ GameState = Class { __includes = BaseState }
 
 function GameState:init()
     self.levelIndex = 1
-    self:loadLevel(self.levelIndex)
     self.playerLives = 3
+    self.playerHp = 7
+    self:loadLevel(self.levelIndex)
 end
 
 function GameState:render()
+    if self.level == nil then
+        return
+    end
     self.level:render()
-    -- This is temporarry UI. Later this information is going to be on lowest row of level tiles
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf(tostring(self.playerLives) .. " lives", -5, 5, VIRTUAL_WIDTH, 'right')
 end
 
 function GameState:update(dt)
@@ -59,6 +60,5 @@ function GameState:loadLevel(levelIndex)
 end
 
 function GameState:loadNextLevel()
-    self.levelIndex = self.levelIndex + 1
-    self:loadLevel(self.levelIndex)
+    self:loadLevel(self.levelIndex + 1)
 end

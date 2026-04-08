@@ -35,7 +35,7 @@ require 'src.tiles.UiBlankTile'
 require 'src.tiles.UiHpIconTile'
 require 'src.tiles.UiValueTile'
 
-require 'src.ui.ui_bar'
+require 'src.ui.UiBar'
 
 -- Playable character
 require 'src.Player'

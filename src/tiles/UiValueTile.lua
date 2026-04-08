@@ -1,10 +1,13 @@
 --- @class Tile representing a numeric/text value on UI bar
 UiValueTile = Class { __includes = BaseTile }
 
-function UiValueTile:init(coordinates, value)
+--- get value is a function that returns string value
+function UiValueTile:init(coordinates, getValue)
+    assert(coordinates ~= nil)
+    assert(getValue ~= nil)
     self.coordinates = coordinates
     self.canBePicked = true
-    self.value = value
+    self.getValue = getValue
     self.type = 'UiValueTile'
 end
 
@@ -14,13 +17,13 @@ function UiValueTile:render()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.rectangle("fill", x, y, TILE_SIZE, TILE_SIZE)
 
-
     local font = love.graphics.getFont()
     love.graphics.setColor(0, 0, 0, 1)
-
+    local value = self.getValue()
+    assert(value ~= nil)
     love.graphics.printf(
-        self.value,
-        x + TILE_SIZE / 2 - font:getWidth(self.value) / 2,
+        value,
+        x + TILE_SIZE / 2 - font:getWidth(value) / 2,
         y + TILE_SIZE / 2 - font:getHeight() / 2,
         TILE_SIZE
     )
