@@ -8,7 +8,8 @@ TILE_SIZE = 32
 -- Max num of tiles horizontally (level width in tiles)
 LEVEL_WIDTH = 14
 -- Max num of tiles vertically (level height in tiles)
-LEVEL_HEIGHT = 8
+-- 8 tiles for level itself + 1 for UI shown on the bottom of the screen
+LEVEL_HEIGHT = 9
 
 -- size we're trying to emulate with push
 VIRTUAL_WIDTH = TILE_SIZE * LEVEL_WIDTH

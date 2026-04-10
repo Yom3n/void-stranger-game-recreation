@@ -31,6 +31,12 @@ require 'src.tiles.WallTile'
 require 'src.tiles.VoidTile'
 require 'src.tiles.GoalTile'
 
+require 'src.tiles.UiBlankTile'
+require 'src.tiles.UiHpIconTile'
+require 'src.tiles.UiValueTile'
+
+require 'src.ui.UiBar'
+
 -- Playable character
 require 'src.Player'
 
