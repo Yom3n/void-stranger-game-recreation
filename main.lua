@@ -3,8 +3,6 @@ require 'src/deps'
 
 
 function love.load()
-    print("LÖVE version:", love._version)
-    print("Lua version:", _VERSION)
     love.graphics.setDefaultFilter("nearest", "nearest")
     math.randomseed(os.time())
     love.window.setTitle("Void stranger")
