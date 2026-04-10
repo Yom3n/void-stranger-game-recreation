@@ -21,9 +21,10 @@ function UiValueTile:render()
     love.graphics.setColor(0, 0, 0, 1)
     local value = self.getValue()
     assert(value ~= nil)
+    local valueStr = tostring(value)
     love.graphics.printf(
-        value,
-        x + TILE_SIZE / 2 - font:getWidth(value) / 2,
+        valueStr,
+        x + TILE_SIZE / 2 - font:getWidth(valueStr) / 2,
         y + TILE_SIZE / 2 - font:getHeight() / 2,
         TILE_SIZE
     )
