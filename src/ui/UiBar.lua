@@ -13,12 +13,14 @@ function UiBar:getLevelIndex()
     return self.stateMachine.current.levelIndex
 end
 
--- TODO NOW THESE TILES COORDINEATES ARE NOT UPDATED WHEN THEAY ARE CHAGNED ON THE LEVEL
--- TILES MUST BE A GETTER, AND THE ALL THE OPERATIONS MUST BE DONE ON THE LEVEL
 function UiBar:init(stateMachine)
     assert(stateMachine ~= nil)
     self.stateMachine = stateMachine
-    self.tiles = {
+end
+
+-- returns list of tiles for new Ui Bar
+function UiBar:generateUiTiles()
+    local tiles = {
         UiBlankTile(Coordinates(1, LEVEL_HEIGHT)),
         UiHpIconTile(Coordinates(2, LEVEL_HEIGHT)),
         -- num hp
@@ -46,14 +48,15 @@ function UiBar:init(stateMachine)
             function() return self:getLevelIndex() end
         ),
     }
-    assert(#self.tiles == LEVEL_WIDTH)
+    assert(#tiles == LEVEL_WIDTH)
+    return tiles
 end
 
-function UiBar:render()
-    for i = 1, LEVEL_WIDTH do
-        self.tiles[i]:render()
-    end
-end
+-- function UiBar:render()
+--     for i = 1, LEVEL_WIDTH do
+--         self.tiles[i]:render()
+--     end
+-- end
 
 local function getTileValue(tiles, index)
     assert(tiles ~= nil)
@@ -67,14 +70,17 @@ end
 --- When player changes values on UI,
 --- then this reads current UI bar values - not the one from GameState
 --- Can return nil
-function UiBar:getUiHp()
-    return getTileValue(self.tiles, 3)
+function UiBar:getUiHp(tiles)
+    assert(tiles ~= nil)
+    return getTileValue(tiles, 3)
 end
 
-function UiBar:getUiLives()
-    return getTileValue(self.tiles, 6)
+function UiBar:getUiLives(tiles)
+    assert(tiles ~= nil)
+    return getTileValue(tiles, 6)
 end
 
-function UiBar:getUiLevelIndex()
-    return getTileValue(self.tiles, 14)
+function UiBar:getUiLevelIndex(tiles)
+    assert(tiles ~= nil)
+    return getTileValue(tiles, 14)
 end

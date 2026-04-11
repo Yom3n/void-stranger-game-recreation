@@ -50,6 +50,7 @@ function Level:init(levelBlueprint, callbacks)
     self.objects = {}
 
     self.uiBar = UiBar(StateMachine)
+    local uiTiles = self.uiBar:generateUiTiles()
 
     for i = 1, LEVEL_WIDTH do
         self.tiles[i] = {}
@@ -57,7 +58,7 @@ function Level:init(levelBlueprint, callbacks)
         for j = 1, LEVEL_HEIGHT do
             if j == LEVEL_HEIGHT then
                 -- Last row is for UI bar
-                self.tiles[i][j] = self.uiBar.tiles[i]
+                self.tiles[i][j] = uiTiles[i]
             else
                 -- In lua tables use [row][column] annotation,
                 -- but I'm flipping it to make it blueprint more human readable
@@ -97,10 +98,20 @@ function Level:init(levelBlueprint, callbacks)
     end
 end
 
+-- returns last row of level which contains UI bar
+function Level:getUiTiles()
+    local uiTiles = {}
+    for i=1, LEVEL_WIDTH do
+        uiTiles[i] = self.tiles[i][LEVEL_HEIGHT]
+    end
+    return uiTiles
+end
+
 -- Called when player reaches the GoalTile
 function Level:onGoalReached()
-    local playerLives = self.uiBar:getUiLives()
-    local playerHp = self.uiBar:getUiHp()
+    local uiTiles = self:getUiTiles()
+    local playerLives = self.uiBar:getUiLives(uiTiles)
+    local playerHp = self.uiBar:getUiHp(uiTiles)
     self.callbacks.onGoalReached(playerLives, playerHp)
 end
 
