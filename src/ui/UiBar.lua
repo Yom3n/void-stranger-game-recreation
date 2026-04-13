@@ -52,11 +52,6 @@ function UiBar:generateUiTiles()
     return tiles
 end
 
--- function UiBar:render()
---     for i = 1, LEVEL_WIDTH do
---         self.tiles[i]:render()
---     end
--- end
 
 local function getTileValue(tiles, index)
     assert(tiles ~= nil)
@@ -65,6 +60,9 @@ local function getTileValue(tiles, index)
     -- accessed through . because its a field that is a Function type
     -- Don't check the type - there might be void tile, or Floor tile
     -- but then we want it to return nil
+    if tile.getValue == nil then
+        return nil
+    end
     return tile.getValue()
 end
 --- When player changes values on UI,

@@ -101,7 +101,7 @@ end
 -- returns last row of level which contains UI bar
 function Level:getUiTiles()
     local uiTiles = {}
-    for i=1, LEVEL_WIDTH do
+    for i = 1, LEVEL_WIDTH do
         uiTiles[i] = self.tiles[i][LEVEL_HEIGHT]
     end
     return uiTiles
