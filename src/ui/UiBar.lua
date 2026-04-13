@@ -52,11 +52,10 @@ function UiBar:generateUiTiles()
     return tiles
 end
 
-
-local function getTileValue(tiles, index)
-    assert(tiles ~= nil)
+local function getTileValue(uiTiles, index)
+    assert(uiTiles ~= nil)
     assert(index ~= nil)
-    local tile = tiles[index]
+    local tile = uiTiles[index]
     -- accessed through . because its a field that is a Function type
     -- Don't check the type - there might be void tile, or Floor tile
     -- but then we want it to return nil
@@ -68,17 +67,17 @@ end
 --- When player changes values on UI,
 --- then this reads current UI bar values - not the one from GameState
 --- Can return nil
-function UiBar:getUiHp(tiles)
-    assert(tiles ~= nil)
-    return getTileValue(tiles, 3)
+function UiBar:getUiHp(uiTiles)
+    assert(uiTiles ~= nil)
+    return getTileValue(uiTiles, 3)
 end
 
-function UiBar:getUiLives(tiles)
-    assert(tiles ~= nil)
-    return getTileValue(tiles, 6)
+function UiBar:getUiLives(uiTiles)
+    assert(uiTiles ~= nil)
+    return getTileValue(uiTiles, 6)
 end
 
-function UiBar:getUiLevelIndex(tiles)
-    assert(tiles ~= nil)
-    return getTileValue(tiles, 14)
+function UiBar:getUiLevelIndex(uiTiles)
+    assert(uiTiles ~= nil)
+    return getTileValue(uiTiles, 14)
 end

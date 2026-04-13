@@ -52,7 +52,11 @@ function GameState:changeLevel(levelIndex, playerLives, playerHp)
         StateMachine:change("win")
         return
     end
-    self.level = Level(levelBp, {
+    self.level = Level(levelIndex, levelBp, {
+        onWarpTriggered = function(playerLives, playerHp, levelIndex)
+            print("MOVING PLAYER TO: ".. levelIndex)
+            self:changeLevel(levelIndex, playerLives, playerHp )
+        end,
         onGoalReached = function(playerLives, playerHp)
             self:loadNextLevel(playerLives, playerHp)
         end,
