@@ -165,13 +165,13 @@ function Level:placeTile(tile)
     if tile.coordinates.y == LEVEL_HEIGHT then
         -- If tile is placed on UI bar
         local uiTiles = self:getUiTiles()
-        local uiLevelIndexValue = UiBar:getUiLevelIndex(uiTiles)
+        local uiLevelIndexValue = self.uiBar:getUiLevelIndex(uiTiles)
         if uiLevelIndexValue ~= nil and self.levelIndex ~= uiLevelIndexValue then
             -- when 2 last digits of level value are changed,
             -- player is warped immediately to provided level
             self.callbacks.onWarpTriggered(
-                UiBar:getUiLives(uiTiles),
-                UiBar:getUiHp(uiTiles),
+                self.uiBar:getUiLives(uiTiles),
+                self.uiBar:getUiHp(uiTiles),
                 uiLevelIndexValue
             )
         end

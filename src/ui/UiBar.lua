@@ -59,7 +59,7 @@ local function getTileValue(uiTiles, index)
     -- accessed through . because its a field that is a Function type
     -- Don't check the type - there might be void tile, or Floor tile
     -- but then we want it to return nil
-    if tile.getValue == nil then
+    if tile ~= nil and tile.getValue == nil then
         return nil
     end
     return tile.getValue()

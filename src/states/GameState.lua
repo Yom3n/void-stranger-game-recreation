@@ -35,11 +35,12 @@ end
 
 -- levelIndex is a number starting from 1
 function GameState:changeLevel(levelIndex, playerLives, playerHp)
+    assert(levelIndex ~= nil)
     self.levelIndex = levelIndex
 
     -- When level changes, we need to take values from UI and update Player state based on them
-    if playerHp == nil or playerHp <= 0
-        or playerLives == nil or playerLives <= 0 then
+    if playerHp == nil or tonumber(playerHp) <= 0
+        or playerLives == nil or tonumber(playerLives) <= 0 then
         self:onPlayerDeath()
         return
     end
@@ -54,8 +55,8 @@ function GameState:changeLevel(levelIndex, playerLives, playerHp)
     end
     self.level = Level(levelIndex, levelBp, {
         onWarpTriggered = function(playerLives, playerHp, levelIndex)
-            print("MOVING PLAYER TO: ".. levelIndex)
-            self:changeLevel(levelIndex, playerLives, playerHp )
+            print("MOVING PLAYER TO: " .. tostring(levelIndex))
+            self:changeLevel(levelIndex, playerLives, playerHp)
         end,
         onGoalReached = function(playerLives, playerHp)
             self:loadNextLevel(playerLives, playerHp)
