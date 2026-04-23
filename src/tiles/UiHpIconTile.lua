@@ -3,7 +3,7 @@ UiHpIconTile = Class { __includes = BaseTile }
 
 function UiHpIconTile:init(coordinates)
     self.coordinates = coordinates
-    self.canBePicked = false 
+    self.canBePicked = false
     self.type = 'UiHpIconTile'
 end
 
@@ -14,7 +14,8 @@ function UiHpIconTile:render()
     love.graphics.rectangle("fill", x, y, TILE_SIZE, TILE_SIZE)
 
 
-    local font = love.graphics.getFont()
+    local font = Fonts.big
+    love.graphics.setFont(font)
     love.graphics.setColor(0, 0, 0, 1)
 
     local text = "HP"

@@ -11,6 +11,16 @@ function love.load()
         characterSheet = love.graphics.newImage('assets/graphics/characterSpriteSheet.png')
     }
 
+    Fonts = {
+        small = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 13, "normal"),
+        regular = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 16, "normal"),
+        big = love.graphics.newFont('assets/fonts/PixelifySans-Bold.ttf', 24, "normal"),
+    }
+    -- for _,f in pairs(Fonts) do
+    --     f:setFilter("nearest", "nearest")
+    -- end
+    love.graphics.setFont(Fonts.regular)
+
     local characterQuads = GenerateQuads(Sprites.characterSheet, 1)
     CharacterQuads = {
         charDown = characterQuads[1],
@@ -66,7 +76,7 @@ end
 
 function displayFPS()
     -- simple FPS display across all states
-    -- love.graphics.setFont(gFonts['small'])
+      love.graphics.setFont(Fonts.regular)
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
 end
