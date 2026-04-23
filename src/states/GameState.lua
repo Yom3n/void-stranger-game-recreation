@@ -1,11 +1,10 @@
 GameState = Class { __includes = BaseState }
 
-
 function GameState:init()
     self.levelIndex = 1
-    self.playerLives = 3
-    self.playerHp = 7
-    self:loadLevel(self.levelIndex)
+    self.playerLives = INIT_PLAYER_LIVES
+    self.playerHp = INIT_PLAYER_HP
+    self:changeLevel(self.levelIndex, self.playerLives, self.playerHp)
 end
 
 function GameState:render()
@@ -35,30 +34,51 @@ function GameState:update(dt)
 end
 
 -- levelIndex is a number starting from 1
-function GameState:loadLevel(levelIndex)
+function GameState:changeLevel(levelIndex, playerLives, playerHp)
+    assert(levelIndex ~= nil)
+    self.levelIndex = levelIndex
+
+    -- When level changes, we need to take values from UI and update Player state based on them
+    if playerHp == nil or tonumber(playerHp) <= 0
+        or playerLives == nil or tonumber(playerLives) <= 0 then
+        self:onPlayerDeath()
+        return
+    end
+    self.playerLives = playerLives
+    self.playerHp = playerHp
+
+
     local levelBp = Levels[levelIndex]
     if levelBp == nil then
         StateMachine:change("win")
         return
     end
-    self.level = Level(levelBp, {
-        onGoalReached = function()
-            self:loadNextLevel()
+    self.level = Level(levelIndex, levelBp, {
+        onWarpTriggered = function(playerLives, playerHp, levelIndex)
+            print("MOVING PLAYER TO: " .. tostring(levelIndex))
+            self:changeLevel(levelIndex, playerLives, playerHp)
+        end,
+        onGoalReached = function(playerLives, playerHp)
+            self:loadNextLevel(playerLives, playerHp)
         end,
         onPlayerDeath = function()
-            self.playerLives = self.playerLives - 1
-            if self.playerLives <= 0 then
-                StateMachine:change("gameOver")
-                return
-            end
-            self:loadLevel(self.levelIndex)
+            self:onPlayerDeath()
         end
     })
     self.player = self.level:getPlayer()
-    self.levelIndex = levelIndex
     assert(self.player ~= nil, 'Player must exist on the level')
 end
 
-function GameState:loadNextLevel()
-    self:loadLevel(self.levelIndex + 1)
+function GameState:onPlayerDeath()
+    self.playerLives = self.playerLives - 1
+    if self.playerLives <= 0 then
+        StateMachine:change("gameOver")
+        return
+    end
+    self.playerHp = INIT_PLAYER_HP
+    self:changeLevel(self.levelIndex, self.playerLives, self.playerHp)
+end
+
+function GameState:loadNextLevel(playerLives, playerHp)
+    self:changeLevel(self.levelIndex + 1, playerLives, playerHp)
 end

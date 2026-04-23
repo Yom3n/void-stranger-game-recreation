@@ -23,9 +23,10 @@ local objectsBlueprintMapping = {
 ---
 --- @param levelBlueprint table A 2D table representing the level layout
 --- @param callbacks table Table containing all level callbacks
-function Level:init(levelBlueprint, callbacks)
+function Level:init(levelIndex, levelBlueprint, callbacks)
+    assert(levelIndex ~= nil)
     assert(
-    -- 1 is reserved for UI bar
+    -- 1 row is reserved for UI bar
         #levelBlueprint == LEVEL_HEIGHT - 1,
         string.format(
             "Invalid blueprint: expected height of %d, got %d",
@@ -42,14 +43,22 @@ function Level:init(levelBlueprint, callbacks)
         )
     )
     assert(callbacks ~= nil, "callbacks parameter is required")
-    assert(callbacks.onGoalReached ~= nil, "callbacks.onGoalReached function is required")
-    assert(callbacks.onPlayerDeath ~= nil, "onPlayerDeath function is required")
+    -- When player reaches goal tiles
+    assert(callbacks.onGoalReached ~= nil, "callbacks.onGoalReached callback is required")
+    -- When player dies
+    assert(callbacks.onPlayerDeath ~= nil, "onPlayerDeath callback is required")
+    -- When player triggers warp mechanic - when on UI 2 last digits of level index are changed,
+    -- player is instantly warped to provided level
+    assert(callbacks.onWarpTriggered ~= nil, "onWarpTriggered callback is required")
     self.callbacks = callbacks
+
+    self.levelIndex = levelIndex
 
     self.tiles = {}
     self.objects = {}
 
-    local uiBar = UiBar(StateMachine)
+    self.uiBar = UiBar(StateMachine)
+    local uiTiles = self.uiBar:generateUiTiles()
 
     for i = 1, LEVEL_WIDTH do
         self.tiles[i] = {}
@@ -57,7 +66,7 @@ function Level:init(levelBlueprint, callbacks)
         for j = 1, LEVEL_HEIGHT do
             if j == LEVEL_HEIGHT then
                 -- Last row is for UI bar
-                self.tiles[i][j] = uiBar.tiles[i]
+                self.tiles[i][j] = uiTiles[i]
             else
                 -- In lua tables use [row][column] annotation,
                 -- but I'm flipping it to make it blueprint more human readable
@@ -97,9 +106,21 @@ function Level:init(levelBlueprint, callbacks)
     end
 end
 
+-- returns last row of level which contains UI bar
+function Level:getUiTiles()
+    local uiTiles = {}
+    for i = 1, LEVEL_WIDTH do
+        uiTiles[i] = self.tiles[i][LEVEL_HEIGHT]
+    end
+    return uiTiles
+end
+
 -- Called when player reaches the GoalTile
 function Level:onGoalReached()
-    self.callbacks.onGoalReached()
+    local uiTiles = self:getUiTiles()
+    local playerLives = self.uiBar:getUiLives(uiTiles)
+    local playerHp = self.uiBar:getUiHp(uiTiles)
+    self.callbacks.onGoalReached(playerLives, playerHp)
 end
 
 function Level:onPlayerDeath()
@@ -136,11 +157,27 @@ function Level:placeTile(tile)
         return false
     end
     if self.objects[coordinates.x][coordinates.y] ~= nil then
-        -- Can't place tile when there is an object on this tile
+        print("Can't place tile when there is an object on this tile")
         return false
     end
     self.tiles[coordinates.x][coordinates.y] = tile
-    -- print(string.format("Succesfully placed tile %s on %s, %s", tile.type, coordinates.x, coordinates.y))
+
+    if tile.coordinates.y == LEVEL_HEIGHT then
+        -- If tile is placed on UI bar
+        local uiTiles = self:getUiTiles()
+        local uiLevelIndexValue = self.uiBar:getUiLevelIndex(uiTiles)
+        if uiLevelIndexValue ~= nil and self.levelIndex ~= uiLevelIndexValue then
+            -- when 2 last digits of level value are changed,
+            -- player is warped immediately to provided level
+            self.callbacks.onWarpTriggered(
+                self.uiBar:getUiLives(uiTiles),
+                self.uiBar:getUiHp(uiTiles),
+                uiLevelIndexValue
+            )
+        end
+    end
+
+    -- print(string.format("Successfully placed tile %s on %s, %s", tile.type, coordinates.x, coordinates.y))
     return true
 end
 

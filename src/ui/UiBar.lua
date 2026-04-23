@@ -16,7 +16,11 @@ end
 function UiBar:init(stateMachine)
     assert(stateMachine ~= nil)
     self.stateMachine = stateMachine
-    self.tiles = {
+end
+
+-- returns list of tiles for new Ui Bar
+function UiBar:generateUiTiles()
+    local tiles = {
         UiBlankTile(Coordinates(1, LEVEL_HEIGHT)),
         UiHpIconTile(Coordinates(2, LEVEL_HEIGHT)),
         -- num hp
@@ -44,11 +48,36 @@ function UiBar:init(stateMachine)
             function() return self:getLevelIndex() end
         ),
     }
-    assert(#self.tiles == LEVEL_WIDTH)
+    assert(#tiles == LEVEL_WIDTH)
+    return tiles
 end
 
-function UiBar:render()
-    for i = 1, LEVEL_WIDTH do
-        self.tiles[i]:render()
+local function getTileValue(uiTiles, index)
+    assert(uiTiles ~= nil)
+    assert(index ~= nil)
+    local tile = uiTiles[index]
+    -- accessed through . because its a field that is a Function type
+    -- Don't check the type - there might be void tile, or Floor tile
+    -- but then we want it to return nil
+    if tile ~= nil and tile.getValue == nil then
+        return nil
     end
+    return tile.getValue()
+end
+--- When player changes values on UI,
+--- then this reads current UI bar values - not the one from GameState
+--- Can return nil
+function UiBar:getUiHp(uiTiles)
+    assert(uiTiles ~= nil)
+    return getTileValue(uiTiles, 3)
+end
+
+function UiBar:getUiLives(uiTiles)
+    assert(uiTiles ~= nil)
+    return getTileValue(uiTiles, 6)
+end
+
+function UiBar:getUiLevelIndex(uiTiles)
+    assert(uiTiles ~= nil)
+    return getTileValue(uiTiles, 14)
 end
