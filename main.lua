@@ -7,26 +7,33 @@ function love.load()
     math.randomseed(os.time())
     love.window.setTitle("Void stranger")
 
-    Sprites = {
-        characterSheet = love.graphics.newImage('assets/graphics/characterSpriteSheet.png')
-    }
-
     Fonts = {
         small = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 13, "normal"),
         regular = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 16, "normal"),
-        big = love.graphics.newFont('assets/fonts/PixelifySans-Bold.ttf', 24, "normal"),
+        big = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 24, "normal"),
     }
-    -- for _,f in pairs(Fonts) do
-    --     f:setFilter("nearest", "nearest")
-    -- end
     love.graphics.setFont(Fonts.regular)
 
-    local characterQuads = GenerateQuads(Sprites.characterSheet, 1)
+    Sprites = {
+        characterSheet = love.graphics.newImage('assets/graphics/characterSpriteSheet.png')
+    }
+    --- CharacterSheet cotains:
+    --- 1st row - character in four directions
+    --- 2nd row - tiles
+    --- 3rd row - objects
+    local quads = GenerateQuads(Sprites.characterSheet, 3)
     CharacterQuads = {
-        charDown = characterQuads[1],
-        charUp = characterQuads[2],
-        charRight = characterQuads[3],
-        charLeft = characterQuads[4],
+        charDown = quads[0][0],
+        charUp = quads[0][1],
+        charRight = quads[0][2],
+        charLeft = quads[0][3],
+    }
+    TileQuads = {
+        floor = quads[1][0],
+        goal = quads[1][1]
+    }
+    ObjectsQuads = {
+        egg = quads[2][0]
     }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -76,7 +83,7 @@ end
 
 function displayFPS()
     -- simple FPS display across all states
-      love.graphics.setFont(Fonts.regular)
+    love.graphics.setFont(Fonts.regular)
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
 end
