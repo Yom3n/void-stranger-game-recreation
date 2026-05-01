@@ -17,7 +17,7 @@ function love.load()
     Sprites = {
         characterSheet = love.graphics.newImage('assets/graphics/characterSpriteSheet.png')
     }
-    --- CharacterSheet cotains:
+    --- CharacterSheet contains:
     --- 1st row - character in four directions
     --- 2nd row - tiles
     --- 3rd row - objects
