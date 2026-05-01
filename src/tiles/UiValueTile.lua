@@ -17,8 +17,10 @@ function UiValueTile:render()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.rectangle("fill", x, y, TILE_SIZE, TILE_SIZE)
 
-    local font = love.graphics.getFont()
+    local font = Fonts.big
+    love.graphics.setFont(font)
     love.graphics.setColor(0, 0, 0, 1)
+
     local value = self.getValue()
     assert(value ~= nil)
     local valueStr = tostring(value)

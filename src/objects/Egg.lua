@@ -12,11 +12,10 @@ end
 
 --- Renders the object onto the screen
 function Egg:render()
-    love.graphics.setColor(0, 0, 1)
-    love.graphics.circle("fill",
-        self.coordinates:inGameX() + TILE_SIZE / 2,
-        self.coordinates:inGameY() + TILE_SIZE / 2,
-        TILE_SIZE / 2)
+    local x = self.coordinates:inGameX()
+    local y = self.coordinates:inGameY()
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.draw(Sprites.characterSheet, ObjectsQuads.egg, x, y)
 end
 
 --- Eggs can be pushed, but can't move through Walls, and other objects
@@ -35,7 +34,7 @@ function Egg:move(dir)
         local targetTile = self.level:peekTile(targetCoordinates)
         targetTile:onEnter(self, self.level)
     end
-    return moved 
+    return moved
 end
 
 function Egg:die()
