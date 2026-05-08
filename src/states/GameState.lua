@@ -56,9 +56,11 @@ function GameState:changeLevel(levelIndex, playerLives, playerHp)
     self.level = Level(levelIndex, levelBp, {
         onWarpTriggered = function(playerLives, playerHp, levelIndex)
             print("MOVING PLAYER TO: " .. tostring(levelIndex))
+            love.audio.play(Sounds.levelWarp)
             self:changeLevel(levelIndex, playerLives, playerHp)
         end,
         onGoalReached = function(playerLives, playerHp)
+            love.audio.play(Sounds.levelWarp)
             self:loadNextLevel(playerLives, playerHp)
         end,
         onPlayerDeath = function()

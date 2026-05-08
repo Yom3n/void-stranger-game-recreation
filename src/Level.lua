@@ -231,7 +231,6 @@ end
 
 --- Check if obj can be moved to coordinates.
 --- Returns true when move is possible, or false when its not
---- TODO Every object now should call this in his move
 function Level:tryMoveObject(obj, coordinates, dir, settings)
     assert(obj ~= nil, 'obj cant be null')
     assert(coordinates ~= nil, 'coordinates cant be null')
@@ -252,6 +251,7 @@ function Level:tryMoveObject(obj, coordinates, dir, settings)
                 -- Push blocked
                 return false
             end
+            love.audio.play(Sounds.pushObject)
         else
             -- Can't move to occupied tile
             return false

@@ -40,6 +40,7 @@ end
 function Egg:die()
     -- TODO Play falling animation
     self.level:removeObject(self.coordinates)
+    love.audio.play(Sounds.objectFall)
 end
 
 --- Checks if Player can push the object

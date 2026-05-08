@@ -37,28 +37,19 @@ function love.load()
     }
 
 
-
-    local soundsData = {
-        music = love.sound.newSoundData('assets/sounds/Music.wav'),
-        actionBlocked = love.sound.newSoundData('assets/sounds/ActionBlocked.wav'),
-        levelWarp = love.sound.newSoundData('assets/sounds/LevelWarp.wav'),
-        pickUpTile = love.sound.newSoundData('assets/sounds/PickUpTile.wav'),
-        placeTile = love.sound.newSoundData('assets/sounds/PlaceTile.wav'),
-        pushObject = love.sound.newSoundData('assets/sounds/PushObj.wav'),
-        step = love.sound.newSoundData('assets/sounds/Step.wav'),
-        fall = love.sound.newSoundData('assets/sounds/Fall.wav'),
-    }
-
     Sounds = {
-        music = love.audio.newSource(soundsData.music),
-        actionBlocked = love.audio.newSource(soundsData.actionBlocked),
-        levelWarp = love.audio.newSource(soundsData.levelWarp),
-        pickUpTile = love.audio.newSource(soundsData.pickUpTile),
-        placeTile = love.audio.newSource(soundsData.placeTile),
-        pushObject = love.audio.newSource(soundsData.pushObject),
-        step = love.audio.newSource(soundsData.step),
-        fall = love.audio.newSource(soundsData.fall),
+        music = love.audio.newSource('assets/sounds/Music.wav', 'stream'),
+        actionBlocked = love.audio.newSource('assets/sounds/ActionBlocked.wav', 'static'),
+        levelWarp = love.audio.newSource('assets/sounds/LevelWarp.wav', 'static'),
+        pickUpTile = love.audio.newSource('assets/sounds/PickUpTile.wav', 'static'),
+        placeTile = love.audio.newSource('assets/sounds/PlaceTile.wav', 'static'),
+        pushObject = love.audio.newSource('assets/sounds/PushObj.wav', 'static'),
+        -- objectFall should use louder version of pushObject
+        objectFall = love.audio.newSource('assets/sounds/PushObj.wav', 'static'),
+        step = love.audio.newSource('assets/sounds/Step.wav', 'static'),
+        playerFall = love.audio.newSource('assets/sounds/Fall.wav', 'static'),
     }
+    Sounds.music:setVolume(.3)
     Sounds.music:setLooping(true)
     love.audio.play(Sounds.music)
 
