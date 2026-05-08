@@ -36,6 +36,32 @@ function love.load()
         egg = quads[2][0]
     }
 
+
+
+    local soundsData = {
+        music = love.sound.newSoundData('assets/sounds/Music.wav'),
+        actionBlocked = love.sound.newSoundData('assets/sounds/ActionBlocked.wav'),
+        levelWarp = love.sound.newSoundData('assets/sounds/LevelWarp.wav'),
+        pickUpTile = love.sound.newSoundData('assets/sounds/PickUpTile.wav'),
+        placeTile = love.sound.newSoundData('assets/sounds/PlaceTile.wav'),
+        pushObject = love.sound.newSoundData('assets/sounds/PushObj.wav'),
+        step = love.sound.newSoundData('assets/sounds/Step.wav'),
+        fall = love.sound.newSoundData('assets/sounds/Fall.wav'),
+    }
+
+    Sounds = {
+        music = love.audio.newSource(soundsData.music),
+        actionBlocked = love.audio.newSource(soundsData.actionBlocked),
+        levelWarp = love.audio.newSource(soundsData.levelWarp),
+        pickUpTile = love.audio.newSource(soundsData.pickUpTile),
+        placeTile = love.audio.newSource(soundsData.placeTile),
+        pushObject = love.audio.newSource(soundsData.pushObject),
+        step = love.audio.newSource(soundsData.step),
+        fall = love.audio.newSource(soundsData.fall),
+    }
+    Sounds.music:setLooping(true)
+    love.audio.play(Sounds.music)
+
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
         fullscreen = false,
