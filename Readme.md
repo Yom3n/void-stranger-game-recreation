@@ -4,7 +4,7 @@
 
 ## CS50 Final Project
 
-This repository contains my CS50 final project: a recreation of the game "Void Stranger" created by System Erasure using Lua and the LÖVE framework. Although I have never played the original game, I was inspired by its unique mechanics after watching a playthrough on YouTube. The project focuses on implementing the core mechanics, while keeping in mind posibility for scaling it.
+This repository contains my CS50 final project: a recreation of the game "Void Stranger" created by System Erasure using Lua and the LÖVE framework. Although I have never played the original game, I was inspired by its unique mechanics after watching a Eyepatch Wolf video about it on YouTube. The project focuses on implementing the core mechanics, while keeping in mind posibility for scaling it. Its more about architectual overview rather than creating a unique game
 
 ---
 
@@ -12,15 +12,25 @@ This repository contains my CS50 final project: a recreation of the game "Void S
 
 - **Framework:** [LÖVE](https://love2d.org/) (Lua)
 - **Goal:** Recreate the basic mechanics and feel of "Void Stranger"
-- **Inspiration:** YouTube playthroughs and the game's minimalist puzzle design
+- **Inspiration:** Void Stranger game, YouTube playthroughs and Void Stranger wiki
 
 ---
 
 ## Features
 
-TODO
-
+- **Movement:** 2D tile based movement
+- **VoidStaff:** Main tool for solving puzzles is a magic staff that let you pick tiles from the map, and palce them in other places
+- **"Stones":** Pushable objects that blocks player way
+- **Hidden mechanic - UI manipulation:** Void stranger has hidden mechanic that I recreated. At some point in the game player can step into UI bar. UI bar is build from tiles that user can rearrange, which give him abbility to **warp between levels** or change lives count
+- **Sounds:** Unique soundtrack, and sound effects
 ---
+
+## Tools
+- **Code editor:** Visual studio code
+- **Graphics:** Aseprite
+- **Music:** JummBox 
+- **Sound effects**: Bfxr
+
 
 ## Getting Started
 
