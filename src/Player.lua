@@ -66,6 +66,7 @@ function Player:move(dir)
         self.direction = dir
         -- TODO I don't like that player need to call targetTile:onEnter by itself
         local targetTile = self.level:peekTile(newPosition)
+        love.audio.play(Sounds.step)
         targetTile:onEnter(self, self.level)
     end
     return moved
@@ -75,8 +76,8 @@ end
 --- goes to Void Staff
 function Player:pickUpTile()
     if self.voidStaffTile then
-        -- TODO Play beep sound
         -- Inventory full, can't pick up another tile
+        love.audio.play(Sounds.actionBlocked)
         return
     end
     local targetCoords = self.coordinates:nextToTile(self.direction)
@@ -88,19 +89,20 @@ function Player:pickUpTile()
     local success = self.level:replaceWithVoid(targetCoords)
     if success then
         assert(target.canBePicked)
+        love.audio.play(Sounds.pickUpTile)
         self.voidStaffTile = target
     else
-        -- Play BEEP sound
         -- Player tries to pick up not pickable tile
+        love.audio.play(Sounds.actionBlocked)
     end
 end
 
 -- Places tile on the VoidTile that player is looking at
 function Player:placeTile()
     if self.voidStaffTile == nil then
-        -- TODO Play beep sound
         -- VoidStaff is empty
-        -- print("VoidStaff is empty")
+        print("Can't place tile. VoidStaff is empty")
+        love.audio.play(Sounds.actionBlocked)
         return
     end
     assert(self.voidStaffTile.type ~= 'VoidTile', 'VoidTiles are not pickable, so never should be in the staff')
@@ -113,13 +115,14 @@ function Player:placeTile()
     local success = self.level:placeTile(self.voidStaffTile)
     if success then
         self.voidStaffTile = nil
+        love.audio.play(Sounds.placeTile)
     else
-        -- Play BEEP sound
         -- Couldn't place tile on this spot
+        love.audio.play(Sounds.actionBlocked)
     end
 end
 
 function Player:die()
-    -- TODO We can can play some sound and animation
+    love.audio.play(Sounds.playerFall)
     self.level:onPlayerDeath()
 end

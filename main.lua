@@ -36,6 +36,23 @@ function love.load()
         egg = quads[2][0]
     }
 
+
+    Sounds = {
+        music = love.audio.newSource('assets/sounds/Music.wav', 'stream'),
+        actionBlocked = love.audio.newSource('assets/sounds/ActionBlocked.wav', 'static'),
+        levelWarp = love.audio.newSource('assets/sounds/LevelWarp.wav', 'static'),
+        pickUpTile = love.audio.newSource('assets/sounds/PickUpTile.wav', 'static'),
+        placeTile = love.audio.newSource('assets/sounds/PlaceTile.wav', 'static'),
+        pushObject = love.audio.newSource('assets/sounds/PushObj.wav', 'static'),
+        -- objectFall should use louder version of pushObject
+        objectFall = love.audio.newSource('assets/sounds/PushObj.wav', 'static'),
+        step = love.audio.newSource('assets/sounds/Step.wav', 'static'),
+        playerFall = love.audio.newSource('assets/sounds/Fall.wav', 'static'),
+    }
+    Sounds.music:setVolume(.3)
+    Sounds.music:setLooping(true)
+    love.audio.play(Sounds.music)
+
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
         fullscreen = false,
