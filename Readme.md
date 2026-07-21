@@ -1,4 +1,4 @@
-# Void Stranger Game Recreation
+# Void Stranger Game Recreation v0.1
 
 #### Video Demo:  [I'm an Indie game developer now - CS50 Final Project](https://www.youtube.com/watch?v=Hxf2olNg_rc)
 
