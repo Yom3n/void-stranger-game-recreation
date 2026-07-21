@@ -12,8 +12,10 @@ push = require 'lib.push'
 -- https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'lib.class'
 
+
 require 'lib.StateMachine'
 
+require 'src.Util'
 
 -- Contains all constants
 require 'src.constants'
@@ -29,9 +31,21 @@ require 'src.tiles.WallTile'
 require 'src.tiles.VoidTile'
 require 'src.tiles.GoalTile'
 
+require 'src.tiles.UiBlankTile'
+require 'src.tiles.UiHpIconTile'
+require 'src.tiles.UiValueTile'
+
+require 'src.ui.UiBar'
+
 -- Playable character
 require 'src.Player'
 
+-- OBJECTS
+require 'src.objects.BaseObject'
+require 'src.objects.Egg'
+
+--- Stores all levels in the game
+require 'src.levels'
 -- Groups tiles into a level
 require 'src.Level'
 

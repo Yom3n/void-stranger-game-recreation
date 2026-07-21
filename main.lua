@@ -1,10 +1,57 @@
 require 'src/deps'
 
 
+
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     math.randomseed(os.time())
     love.window.setTitle("Void stranger")
+
+    Fonts = {
+        small = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 13, "normal"),
+        regular = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 16, "normal"),
+        big = love.graphics.newFont('assets/fonts/PixelifySans-Regular.ttf', 24, "normal"),
+    }
+    love.graphics.setFont(Fonts.regular)
+
+    Sprites = {
+        characterSheet = love.graphics.newImage('assets/graphics/characterSpriteSheet.png')
+    }
+    --- CharacterSheet contains:
+    --- 1st row - character in four directions
+    --- 2nd row - tiles
+    --- 3rd row - objects
+    local quads = GenerateQuads(Sprites.characterSheet, 3)
+    CharacterQuads = {
+        charDown = quads[0][0],
+        charUp = quads[0][1],
+        charRight = quads[0][2],
+        charLeft = quads[0][3],
+    }
+    TileQuads = {
+        floor = quads[1][0],
+        goal = quads[1][1]
+    }
+    ObjectsQuads = {
+        egg = quads[2][0]
+    }
+
+
+    Sounds = {
+        music = love.audio.newSource('assets/sounds/Music.wav', 'stream'),
+        actionBlocked = love.audio.newSource('assets/sounds/ActionBlocked.wav', 'static'),
+        levelWarp = love.audio.newSource('assets/sounds/LevelWarp.wav', 'static'),
+        pickUpTile = love.audio.newSource('assets/sounds/PickUpTile.wav', 'static'),
+        placeTile = love.audio.newSource('assets/sounds/PlaceTile.wav', 'static'),
+        pushObject = love.audio.newSource('assets/sounds/PushObj.wav', 'static'),
+        -- objectFall should use louder version of pushObject
+        objectFall = love.audio.newSource('assets/sounds/PushObj.wav', 'static'),
+        step = love.audio.newSource('assets/sounds/Step.wav', 'static'),
+        playerFall = love.audio.newSource('assets/sounds/Fall.wav', 'static'),
+    }
+    Sounds.music:setVolume(.3)
+    Sounds.music:setLooping(true)
+    love.audio.play(Sounds.music)
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         vsync = true,
@@ -53,7 +100,7 @@ end
 
 function displayFPS()
     -- simple FPS display across all states
-    -- love.graphics.setFont(gFonts['small'])
+    love.graphics.setFont(Fonts.regular)
     love.graphics.setColor(0, 1, 0, 1)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
 end

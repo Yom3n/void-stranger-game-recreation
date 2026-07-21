@@ -13,7 +13,7 @@ function VoidTile:render()
     local y = self.coordinates:inGameY()
     love.graphics.setColor(0.1, 0.1, 0.1, 1)
     love.graphics.rectangle("line", x, y, TILE_SIZE, TILE_SIZE)
-    -- Void tile is transparent, so no sprite/rectangle is needed 
+    -- Void tile is transparent, so no sprite/rectangle is needed
 end
 
 --- Called whenever any entity enter the tile
